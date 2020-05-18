@@ -41,6 +41,7 @@ namespace RenderSamples
 
 		public static void runSample( SampleBase sample )
 		{
+			SetupNativeLibraries.setup();
 			createEngine( out var engine );
 			engine.setConsoleLoggerSink( consoleLoggingLevel );
 
