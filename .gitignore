@@ -1,0 +1,13 @@
+*.deb
+net-core/dotnet-runtime-2.1.18-linux-arm.tar.gz
+RenderSamples/bin/
+RenderSamples/obj/
+Vrmac/bin/
+Vrmac/obj/
+VrmacInterop/bin/
+VrmacInterop/obj/
+*.user
+.vs/
+Vrmac/linux-arm/libVrmac.so
+Vrmac/win10-x64/VrmacFT.dll
+Vrmac/win10-x64/Vrmac.dll

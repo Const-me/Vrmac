@@ -1,0 +1,92 @@
+﻿Diligent Engine (c) Diligent Graphics
+https://github.com/DiligentGraphics/DiligentEngine
+Apache License 2.0
+
+.NET Core (c) Microsoft
+https://dotnet.microsoft.com/download/dotnet-core
+MIT license
+
+ComLightInterop (c) const.me
+https://github.com/Const-me/ComLightInterop
+MIT license
+
+PlexAllocator (c) const.me
+https://github.com/Const-me/CollectionMicrobench/tree/master/Source/PlexAlloc
+MIT license
+
+MonoGame
+https://github.com/MonoGame/MonoGame
+The source files I used say "MIT license", check the sources in VrmacInterop/MonoGame folder.
+
+DirectXMath (c) Microsoft
+https://github.com/Microsoft/DirectXMath
+MIT license
+
+LibTess2 (c) Silicon Graphics, Inc. and Mikko Mononen
+https://github.com/memononen/libtess2
+SGI FREE SOFTWARE LICENSE B
+
+NanoVG ClearType Fork (c) Mikko Mononen and const.me
+https://github.com/Const-me/nanovg/
+MIT license
+
+Mesh Optimizer (c) Arseny Kapoulkine
+https://github.com/zeux/meshoptimizer
+MIT license
+
+-------------------------------------------------------------------
+ The following libraries are only present in Windows C++ DLLs.
+ On Linux, OS-provided equivalents are linked dynamically instead.
+-------------------------------------------------------------------
+
+FreeType 2.10.2
+https://www.freetype.org/index.html
+FreeType Project License
+
+LibPNG 1.6.17
+http://www.libpng.org/pub/png/libpng.html
+libpng license
+
+zlib 1.2.8
+http://www.zlib.net/
+zlib license
+
+libjpeg 9a (c) Independent JPEG Group
+http://ijg.org/
+Custom BSD-like license
+
+libtiff 4.0.10 (c) Sam Leffler, Silicon Graphics, Inc.
+http://simplesystems.org/libtiff/
+BSD-like licence
+
+-------------------------------------------------------------------
+ The following data files are compiled into .NET DLLs.
+ Mouse cursors are in VrmacGraphics.dll
+ The rest of them are for samples, compiled into RenderSamples.dll
+-------------------------------------------------------------------
+
+Mouse cursors, found on the Internets somewhere.
+They look suspiciously close to Windows Vista or Windows 7 cursors.
+Might be a copyrighted work by Microsoft.
+Ideally, please replace these assets with your own ones.
+I’m not a graphics designer and don’t have skills for that.
+They are in the *.gz files in Vrmac/Utils/Cursor/Assets folder.
+
+Utah teapot (c) Martin Newell
+STL model by zzubnik (Nik Clark, Norwich, UK)
+https://commons.wikimedia.org/wiki/File:Utah_teapot_(solid).stl
+
+Tiger from the Ghostscript examples (c) Ghostscript authors
+https://commons.wikimedia.org/wiki/File:Ghostscript_Tiger.svg
+
+Well-known Standard Test Image "Lenna" (c) 1973 Playboy Magazine
+Use of 512x512 scan is "overlooked" and by implication permitted by Playboy.
+https://en.wikipedia.org/wiki/File:Lenna_(test_image).png
+
+Picture of jelly beans taken at USC.
+Free to use for any purpose including unrestricted redistribution, commercial use, and modification.
+https://commons.wikimedia.org/wiki/File:SIPI_Jelly_Beans_4.1.07.tiff
+
+Random PNG icons found on some third-party web site related to World of Warcraft.
+Probably a copyrighted work by Activision Blizzard.
+If so, including them in the samples of a freeware software library is fair use.

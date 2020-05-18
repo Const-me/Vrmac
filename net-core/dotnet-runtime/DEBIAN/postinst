@@ -1,0 +1,8 @@
+#! /bin/sh
+
+# set up a symbolic link to a directory on the path so we can call dotnet
+mkdir --parents /usr/local/bin
+ln -s /opt/dotnet/dotnet /usr/local/bin
+chmod 755 /usr/local/bin/dotnet
+echo Installed Microsoft .NET Core 2.1 runtime
+exit 0

@@ -1,0 +1,28 @@
+﻿Copyright (c) 2020 Konstantin, const.me
+
+Vrmac Graphics End User License Agreement
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files
+(the "Software"), to use, copy, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions.
+
+1. The software is provided “as is”, without warranty of any kind, express or implied, including but not limited to
+the warranties of merchantability, fitness for a particular purpose and noninfringement.
+In no event shall the authors or copyright holders be liable for any claim, damages or other liability,
+whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software
+or the use or other dealings in the software.
+
+2. The complete text of this agreement, including the above copyright notice,
+shall be included in all copies or substantial portions of the software.
+If you distribute a derivative product in binary form, this license must be available to end users of the software. 
+
+3. You may not reverse engineer the software, except when this is allowed by EU Directive 2009/24
+https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32009L0024&from=EN or the laws of your jurisdiction.
+
+4. If any provision of this License is invalid or unenforceable under applicable law, it shall not affect the validity
+or enforceability of the remainder of the terms of this Agreement, and without further action by the parties hereto,
+such provision shall be reformed to the minimum extent necessary to make such provision valid and enforceable.
+
+5. If you institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit)
+alleging that the program itself (excluding combinations of the program with other software or hardware) infringes your patent(s),
+then your rights granted by this license agreement shall terminate as of the date such litigation is filed.

@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<LangVersion>7.3</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="02-Cube\cube.psh" />
+	  <None Remove="02-Cube\cube.vsh" />
+	  <None Remove="03-Texturing\cube.psh" />
+	  <None Remove="03-Texturing\cube.vsh" />
+	  <None Remove="03-Texturing\net-core-logo.png" />
+	  <None Remove="04-Teapot\Teapot.hlsli" />
+	  <None Remove="04-Teapot\TeapotPS.hlsl" />
+	  <None Remove="04-Teapot\TeapotVS.hlsl" />
+	  <None Remove="04-Teapot\utahteapot.stl.gz" />
+	  <None Remove="06-TigerSvg\Tiger.gz" />
+	  <None Remove="07-Sprites\1.png" />
+	  <None Remove="07-Sprites\2.png" />
+	  <None Remove="07-Sprites\3.png" />
+	  <None Remove="07-Sprites\beans.tif.gz" />
+	  <None Remove="07-Sprites\Lenna.jpg" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="02-Cube\cube.psh" />
+	  <EmbeddedResource Include="02-Cube\cube.vsh" />
+	  <EmbeddedResource Include="03-Texturing\cube.psh" />
+	  <EmbeddedResource Include="03-Texturing\cube.vsh" />
+	  <EmbeddedResource Include="03-Texturing\net-core-logo.png" />
+	  <EmbeddedResource Include="04-Teapot\Teapot.hlsli" />
+	  <EmbeddedResource Include="04-Teapot\TeapotPS.hlsl" />
+	  <EmbeddedResource Include="04-Teapot\UtahTeapot.stl.gz" />
+	  <EmbeddedResource Include="04-Teapot\TeapotVS.hlsl" />
+	  <EmbeddedResource Include="06-TigerSvg\Tiger.gz" />
+	  <EmbeddedResource Include="07-Sprites\1.png" />
+	  <EmbeddedResource Include="07-Sprites\2.png" />
+	  <EmbeddedResource Include="07-Sprites\3.png" />
+	  <EmbeddedResource Include="07-Sprites\beans.tif.gz" />
+	  <EmbeddedResource Include="07-Sprites\Lenna.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ComLightInterop" Version="1.3.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\VrmacInterop\VrmacInterop.csproj" />
+		<ProjectReference Include="..\Vrmac\VrmacGraphics.csproj" />
+	</ItemGroup>
+
+</Project>

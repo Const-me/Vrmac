@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+	<metadata>
+		<id>VrmacGraphics</id>
+		<version>1.0.0</version>
+		<authors>Konstantin, const.me</authors>
+		<owners>Konstantin, const.me</owners>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<license type="file">EULA.txt</license>
+		<projectUrl>https://github.com/Const-me/Vrmac</projectUrl>
+		<description>Vrmac graphics engine</description>
+		<releaseNotes>Initial public release</releaseNotes>
+		<copyright>Copyright © const.me, 2020</copyright>
+		<tags>graphics, gpu, direct3d, direct3d-12, direct2d, linux, opengl-es, raspberry-pi</tags>
+		<repository type="git" url="https://github.com/Const-me/Vrmac.git" />
+		<dependencies>
+			<group targetFramework=".NETCoreApp2.1">
+				<dependency id="ComLightInterop" version="1.3.7" exclude="Build,Analyzers" />
+			</group>
+		</dependencies>
+	</metadata>
+
+	<files>
+		<!-- Managed DLLs with their XML documentation -->
+		<file src="bin/Release/netcoreapp2.1/VrmacGraphics.dll" target="lib/netcoreapp2.1" />
+		<file src="bin/Release/netcoreapp2.1/VrmacGraphics.xml" target="lib/netcoreapp2.1" />
+		<file src="bin/Release/netcoreapp2.1/VrmacInterop.dll" target="lib/netcoreapp2.1" />
+		<file src="bin/Release/netcoreapp2.1/VrmacInterop.xml" target="lib/netcoreapp2.1" />
+		
+		<!-- Native binaries. They are not in the repository due to different license, but they are avaiulable on the "Releases" page. -->
+		<file src="bin/Release/netcoreapp2.1/win10-x64/Vrmac.dll" target="build/win10-x64/" />
+		<file src="bin/Release/netcoreapp2.1/win10-x64/VrmacFT.dll" target="build/win10-x64/" />
+		<file src="bin/Release/netcoreapp2.1/linux-arm/libVrmac.so" target="build/linux-arm/" />
+		<!-- Metadata file for consumers of the native DLLs -->
+		<file src="VrmacGraphics.targets" target="build/" />
+		
+		<!-- License -->
+		<file src="../EULA.txt" target="" />
+	</files>
+</package>

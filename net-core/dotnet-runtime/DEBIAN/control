@@ -1,0 +1,12 @@
+Package: dotnet-runtime
+Version: 2.1.18
+Section: libs
+Priority: optional
+Architecture: armhf
+Essential: no
+Installed-Size: 66828
+Maintainer: none
+Description: Microsoft .NET Core Runtime, packaged for Vrmac graphics engine.
+ This package installs version 2.1.18 LTS, downloaded from the internets:
+ https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-2.1.18-linux-arm32-binaries
+Depends: zlib1g

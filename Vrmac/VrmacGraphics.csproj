@@ -1,0 +1,93 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
+		<LangVersion>7.3</LangVersion>
+		<RootNamespace>Vrmac</RootNamespace>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Description>Vrmac graphics engine</Description>
+		<NuspecFile>VrmacGraphics.nuspec</NuspecFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Draw\Shaders\drawPS.hlsl" />
+	  <None Remove="Draw\Shaders\drawUtils.hlsli" />
+	  <None Remove="Draw\Shaders\drawVS.hlsl" />
+	  <None Remove="Draw\SwapChain\BlendPS.glsl" />
+	  <None Remove="Draw\SwapChain\BlendPS.hlsl" />
+	  <None Remove="Draw\SwapChain\BlendVS.glsl" />
+	  <None Remove="Draw\SwapChain\BlendVS.hlsl" />
+	  <None Remove="Draw\Utils\Palette\colors.bin" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Draw\Shaders\drawUtils.hlsli" />
+		<EmbeddedResource Include="Draw\Shaders\drawPS.hlsl" />
+		<EmbeddedResource Include="Draw\Shaders\drawVS.hlsl" />
+		<EmbeddedResource Include="Draw\SwapChain\BlendPS.hlsl" />
+		<EmbeddedResource Include="Draw\SwapChain\BlendPS.glsl" />
+		<EmbeddedResource Include="Draw\SwapChain\BlendVS.glsl" />
+		<EmbeddedResource Include="Draw\SwapChain\BlendVS.hlsl" />
+		<EmbeddedResource Include="Draw\Utils\Palette\colors.bin" />
+		<EmbeddedResource Include="Input\Linux\usb-devices.bin" />
+		<EmbeddedResource Include="Input\Linux\usb-vendors.gz" />
+		<EmbeddedResource Include="Input\X11\KeySym.gz" />
+		<EmbeddedResource Include="Utils\Cursor\Render\AniCursorPS.hlsl" />
+		<EmbeddedResource Include="Utils\Cursor\Render\AniCursorVS.hlsl" />
+		<EmbeddedResource Include="Utils\Cursor\Assets\arrow.gz" />
+		<EmbeddedResource Include="Utils\Cursor\Assets\beam.gz" />
+		<EmbeddedResource Include="Utils\Cursor\Assets\busy.gz" />
+		<EmbeddedResource Include="Utils\Cursor\Render\CursorColorPS.hlsl" />
+		<EmbeddedResource Include="Utils\Cursor\Render\CursorMaskPS.hlsl" />
+		<EmbeddedResource Include="Utils\Cursor\Render\CursorPS.hlsl" />
+		<EmbeddedResource Include="Utils\Cursor\Render\CursorVS.hlsl" />
+		<EmbeddedResource Include="Utils\Cursor\Assets\hand.gz" />
+		<EmbeddedResource Include="Utils\Cursor\Assets\working.gz" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ComLightInterop" Version="1.3.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\VrmacInterop\VrmacInterop.csproj">
+	    <Private>true</Private>
+	  </ProjectReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Draw\Utils\IntMatrixT4.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>IntMatrixT4.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Draw\Utils\IntMatrixT4.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>IntMatrixT4.tt</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="win10-x64/Vrmac.dll" Pack="true" PackagePath="build/win10-x64/">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="win10-x64/VrmacFT.dll" Pack="true" PackagePath="build/win10-x64/">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="linux-arm/libVrmac.so" Pack="true" PackagePath="build/linux-arm/">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+</Project>

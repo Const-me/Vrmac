@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
+		<LangVersion>7.3</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Description>.NET projection of C++ implemented features of Vrmac graphics library.</Description>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageProjectUrl>https://github.com/Const-me/Vrmac</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Const-me/Vrmac.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DefineConstants>DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="ComLightInterop" Version="1.3.7" />
+	</ItemGroup>
+</Project>

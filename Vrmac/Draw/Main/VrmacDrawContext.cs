@@ -1,0 +1,186 @@
+﻿using Diligent.Graphics;
+using System;
+using System.Runtime.CompilerServices;
+using Vrmac.Draw.Text;
+
+namespace Vrmac.Draw.Main
+{
+	sealed class VrmacDrawContext: ImmediateContext, iImmediateDrawContext
+	{
+		internal readonly Context context;
+		readonly DrawDevice device;
+		iDrawDevice iDrawContext.device => device;
+
+		public VrmacDrawContext( Context context, DrawDevice device, iVrmacDraw factory ) :
+			base( context, factory, device.paletteTexture )
+		{
+			this.context = context;
+			this.device = device;
+		}
+
+		public static sStrokeStyle defaultStrokeStyle()
+		{
+			return new sStrokeStyle()
+			{
+				startCap = eLineCap.Flat,
+				endCap = eLineCap.Flat,
+				lineJoin = eLineJoin.Bevel,
+			};
+		}
+
+		Matrix rootTransform;
+
+		ITextureView rgbTarget;
+		bool cleared;
+
+		public iImmediateDrawContext begin( ref Matrix rootTransform, SwapChainFormats swapFormat, ITextureView rgbTarget, bool opaqueColor )
+		{
+			this.rgbTarget = rgbTarget;
+			this.rootTransform = rootTransform;
+			transform.clear();
+			cleared = opaqueColor;
+			return this;
+		}
+
+		public void Dispose()
+		{
+			flush();
+			device.present( cleared );
+			rgbTarget = null;
+		}
+		void IDisposable.Dispose() => Dispose();
+
+		void iImmediateDrawContext.flush() => base.flush();
+
+		void iDrawContext.fillGeometry( iGeometry geometry, iBrush brush )
+		{
+			switch( brush )
+			{
+				case SolidColorBrush solidColor:
+					var cd = solidColor.data;
+					fillGeometry( (iPathGeometry)geometry, cd );
+					return;
+			}
+			throw new NotImplementedException();
+		}
+
+		void iDrawContext.drawGeometry( iGeometry geometry, iBrush brush, float width, iStrokeStyle strokeStyle )
+		{
+			switch( brush )
+			{
+				case SolidColorBrush solidColor:
+					var cd = solidColor.data;
+					sStrokeStyle ss = strokeStyle?.strokeStyle ?? defaultStrokeStyle();
+					strokeGeometry( (iPathGeometry)geometry, cd, width, ref ss );
+					return;
+			}
+			throw new NotImplementedException();
+		}
+
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
+		float computePixelSize( ref Matrix curr )
+		{
+			float scaling = curr.getScaling().maxCoordinate;
+			return device.dpiScaling.mulUnits / scaling;
+		}
+
+		protected override void getCurrentTransform( out Matrix matrix, out float pixel )
+		{
+			Matrix curr = transform.current;
+			matrix = curr * rootTransform;
+			pixel = computePixelSize( ref curr );
+		}
+
+		protected override CPoint transformToPhysicalPixels( Vector2 point, out IntMatrix? intMatrix )
+		{
+			Matrix tform = transform.current;
+			point = tform.transformVector( point );
+			point *= device.dpiScaling.mulPixels;
+			intMatrix = tform.snapMatrixToInt();
+			return point.roundToInt();
+		}
+
+		protected override Vector2 getUserScaling()
+		{
+			return transform.current.getScaling();
+		}
+
+		// void iVrmacDrawContext.drawVaaOutline( iGeometry geometry, Vector4 color ) =>
+		// 	drawVaaOutline( (iPathGeometry)geometry, ref color );
+
+		void iDrawContext.drawRectangle( Rect rect, iBrush brush, float width ) =>
+			drawRectangle( ref rect, width, brush.data().paletteIndex );
+
+		void iDrawContext.fillRectangle( Rect rect, iBrush brush ) =>
+			fillRectangle( ref rect, brush.data() );
+
+		void iDrawContext.fillAndStroke( iGeometry geometry, iBrush fill, iBrush stroke, float strokeWidth, iStrokeStyle strokeStyle )
+		{
+			sStrokeStyle ss = strokeStyle?.strokeStyle ?? defaultStrokeStyle();
+			iPathGeometry path = (iPathGeometry)geometry;
+			var palette = device.paletteTexture;
+			fillGeometry( path, fill.data() );
+			strokeGeometry( path, stroke.data(), strokeWidth, ref ss, 1 );
+		}
+
+		void iDrawContext.drawSprite( Rect rect, int spriteIndex )
+		{
+			TextureAtlas atlas = device.textureAtlas;
+			if( null == atlas )
+				throw new ApplicationException( "Load sprites into the atles first" );
+			atlas.update();
+			var uv = atlas[ spriteIndex ];
+			drawSprite( ref rect, ref uv );
+		}
+
+		CSize iDrawContext.measureText( string text, float width, iFont fontInterface )
+		{
+			Matrix curr = transform.current;
+			float pixel = computePixelSize( ref curr );
+			int widthPIxels = (int)MathF.Round( width / pixel );
+
+			Matrix tform = transform.current;
+			eTextRendering renderMode = textRenderingStyle( tform.snapMatrixToInt() );
+
+			var font = (Font)fontInterface;
+			return font.measureText( text, widthPIxels, renderMode );
+		}
+
+		void iDrawContext.drawText( string text, iFont font, Rect layoutRect, iBrush foreground, iBrush background )
+		{
+			drawText( text, (Font)font, ref layoutRect, foreground.data(), background.data() );
+		}
+
+		protected override void updatePalette()
+		{
+			device.paletteTexture.update();
+		}
+
+		protected override void updateFontTextures()
+		{
+			device.fontTextures.update();
+		}
+
+		Text.Font getMonospaceFont( float fontSize )
+		{
+			iFontCollection fonts = device.fontCollection;
+			var fontFace = fonts.defaultMono( eFontStyleFlags.Normal );
+			return (Text.Font)fontFace.createFont( fontSize, device.dpiScaling.mulPixels );
+		}
+
+		CSize iDrawContext.measureConsoleText( string text, int widthChars, float fontSize )
+		{
+			var font = getMonospaceFont( fontSize );
+			return font.measureConsoleText( text, widthChars );
+		}
+
+		void iDrawContext.drawConsoleText( string text, int width, float fontSize, Vector2 position, iBrush foreground, iBrush background )
+		{
+			var font = getMonospaceFont( fontSize );
+			drawConsoleText( text, width, font, position, foreground.data(), background.data() );
+		}
+
+		readonly MatrixStack transform = new MatrixStack();
+		MatrixStack iDrawContext.transform => transform;
+	}
+}

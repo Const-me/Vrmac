@@ -1,0 +1,27 @@
+#! /bin/sh
+
+# Using /tmp/dotnet-runtime for temporary stuff, for 2 reasons.
+# 1. Packages include file system permissions and owner information.
+# Building packages from non-native file systems, such as CIFS mounted network drive, will result in wrong metadata.
+# 2. /tmp/ folder doesn’t use any storage, it’s in RAM, faster to read/write.
+
+# Copy metadata and license
+sudo rm -rf /tmp/dotnet-runtime
+cp -r ./dotnet-runtime /tmp/
+
+# Decompress the binaries.
+mkdir --parents /tmp/dotnet-runtime/opt/dotnet
+# If the following line fails, download from there: https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-2.1.18-linux-arm32-binaries
+tar -xvzf dotnet-runtime-2.1.18-linux-arm.tar.gz --directory=/tmp/dotnet-runtime/opt/dotnet/
+
+# Set up the correct permissions
+sudo chmod --recursive 555 /tmp/dotnet-runtime
+find /tmp/dotnet-runtime -type f -exec sudo chmod 444 {} +
+# Enable execute permissions on the main binary only
+sudo chmod 755 /tmp/dotnet-runtime/opt/dotnet/dotnet
+# For unknown reason, dpkg-deb fails if it can't write there
+sudo chmod --recursive 755 /tmp/dotnet-runtime/DEBIAN
+sudo chown --recursive root:root /tmp/dotnet-runtime
+
+# Build the package
+sudo dpkg-deb --build /tmp/dotnet-runtime .
