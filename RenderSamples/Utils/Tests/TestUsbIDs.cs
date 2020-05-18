@@ -3,7 +3,7 @@ using System;
 
 namespace RenderSamples.Utils.Tests
 {
-	static class TestUsbIDs
+	/* static class TestUsbIDs
 	{
 		public static void test()
 		{
@@ -29,5 +29,5 @@ namespace RenderSamples.Utils.Tests
 				Console.WriteLine();
 			}
 		}
-	}
+	} */
 }

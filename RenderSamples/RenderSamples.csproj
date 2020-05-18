@@ -40,14 +40,8 @@
 	  <EmbeddedResource Include="07-Sprites\beans.tif.gz" />
 	  <EmbeddedResource Include="07-Sprites\Lenna.jpg" />
 	</ItemGroup>
-
 	<ItemGroup>
-		<PackageReference Include="ComLightInterop" Version="1.3.7" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\VrmacInterop\VrmacInterop.csproj" />
-		<ProjectReference Include="..\Vrmac\VrmacGraphics.csproj" />
+	  <PackageReference Include="VrmacGraphics" Version="1.0.0" />
 	</ItemGroup>
 
 </Project>
