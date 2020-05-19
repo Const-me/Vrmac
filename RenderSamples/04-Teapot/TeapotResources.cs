@@ -1,11 +1,11 @@
 ﻿using Diligent.Graphics;
 using System;
 using System.IO;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vrmac;
-using Matrix = System.Numerics.Matrix4x4;
 
 namespace RenderSamples
 {
@@ -105,18 +105,18 @@ namespace RenderSamples
 		[StructLayout( LayoutKind.Sequential )]
 		struct VsConstants
 		{
-			Matrix worldViewProj;
-			Matrix worldView;
+			Matrix4x4 worldViewProj;
+			Matrix4x4 worldView;
 
-			public VsConstants( ref Matrix wv, ref Matrix proj )
+			public VsConstants( ref Matrix4x4 wv, ref Matrix4x4 proj )
 			{
-				Matrix wvp = wv * proj;
+				Matrix4x4 wvp = wv * proj;
 				worldViewProj = wvp.transposed();
 				worldView = wv.transposed();
 			}
 		}
 
-		public void draw( IDeviceContext context, ref Matrix worldView, ref Matrix projection )
+		public void draw( IDeviceContext context, ref Matrix4x4 worldView, ref Matrix4x4 projection )
 		{
 			var constants = new VsConstants( ref worldView, ref projection );
 			context.writeBuffer( vsConstants, ref constants );

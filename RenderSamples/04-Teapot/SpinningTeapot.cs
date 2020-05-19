@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Vrmac;
 using Vrmac.Input;
 using Vrmac.Utils;
-using Matrix = System.Numerics.Matrix4x4;
 
 namespace RenderSamples
 {
@@ -13,8 +12,8 @@ namespace RenderSamples
 	{
 		TeapotResources resources;
 		TeapotMotion motion;
-		Matrix teapotWorld = Matrix.Identity;
-		Matrix worldView;
+		Matrix4x4 teapotWorld = Matrix4x4.Identity;
+		Matrix4x4 worldView;
 		readonly MouseHandler mouseHandler;
 
 		public SpinningTeapot()
@@ -54,8 +53,8 @@ namespace RenderSamples
 
 			if( resources.haveMesh )
 			{
-				Matrix world = teapotWorld * Matrix.CreateFromQuaternion( extraRotation * motion.rotation );
-				Matrix view = Matrix.CreateTranslation( 0, 0, 5 );
+				Matrix4x4 world = teapotWorld * Matrix4x4.CreateFromQuaternion( extraRotation * motion.rotation );
+				Matrix4x4 view = Matrix4x4.CreateTranslation( 0, 0, 5 );
 				Vector3 cameraPos = new Vector3( 0, -3, 0 );
 				view = DiligentMatrices.createLookAt( cameraPos, Vector3.Zero, Vector3.UnitZ );
 				worldView = world * view;
@@ -63,7 +62,7 @@ namespace RenderSamples
 				float NearPlane = 0.1f;
 				float FarPlane = 100;
 				// Projection matrix differs between DX and OpenGL
-				Matrix projection = DiligentMatrices.createPerspectiveFieldOfView( 0.25f * MathF.PI * motion.zoomFactor, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
+				Matrix4x4 projection = DiligentMatrices.createPerspectiveFieldOfView( 0.25f * MathF.PI * motion.zoomFactor, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
 
 				resources.draw( ic, ref worldView, ref projection );
 			}
