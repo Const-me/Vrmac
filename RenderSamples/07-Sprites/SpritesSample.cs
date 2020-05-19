@@ -5,7 +5,6 @@ using System.Numerics;
 using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace RenderSamples
 {
@@ -33,10 +32,10 @@ namespace RenderSamples
 
 				for( int i = 0; i < spritesCount; i++ )
 				{
-					Matrix imageRotation = Matrix.createRotation( rotationAngle );
+					Matrix3x2 imageRotation = Matrix3x2.CreateRotation( rotationAngle );
 					Vector2 v = randomVertices[ i ];
 					v = rcRandom.getPoint( v );
-					Matrix trans = Matrix.createTranslation( v );
+					Matrix3x2 trans = Matrix3x2.CreateTranslation( v );
 					dc.transform.push( imageRotation * trans );
 					dc.drawSprite( rcSprite, ( i % 3 ) + 2 );
 					dc.transform.pop();

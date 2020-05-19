@@ -4,12 +4,12 @@ namespace Vrmac.Draw.Tessellate
 {
 	struct Options
 	{
-		public readonly Matrix transform;
+		public readonly Matrix3x2 transform;
 		public readonly float precision, pixel;
 		public readonly eBuildFilledMesh fill;
 		public readonly sStrokeInfo stroke;
 
-		public Options( ref Matrix transform, float precision, float pixel, eBuildFilledMesh fill, sStrokeInfo? stroke )
+		public Options( ref Matrix3x2 transform, float precision, float pixel, eBuildFilledMesh fill, sStrokeInfo? stroke )
 		{
 			this.transform = transform;
 			this.precision = precision;
@@ -20,12 +20,12 @@ namespace Vrmac.Draw.Tessellate
 
 		const float translationThreshold = 1.0f / 16.0f;
 
-		static bool isSmallEnoughChange( Matrix a, Matrix b )
+		static bool isSmallEnoughChange( Matrix3x2 a, Matrix3x2 b )
 		{
-			Vector2 diffTrans = a.translation - b.translation;
+			Vector2 diffTrans = a.Translation - b.Translation;
 			if( diffTrans.absolute().maxCoordinate() > translationThreshold )
 				return false;
-			Vector4 r1 = a.rotationMatrix - b.rotationMatrix;
+			Vector4 r1 = a.rotationMatrix() - b.rotationMatrix();
 			if( r1.absolute().maxCoordinate() > 0.015625f )
 				return false;
 			return true;

@@ -29,7 +29,7 @@ namespace Vrmac.Draw
 			return 1;
 		}
 
-		public static IntMatrix? snapMatrixToInt( ref this Matrix tform )
+		public static IntMatrix? snapMatrixToInt( ref this Matrix3x2 tform )
 		{
 			Vector2 scaling = tform.getScaling();
 			Vector2 scalingInc = scaling * scalingTolerance;
@@ -37,19 +37,20 @@ namespace Vrmac.Draw
 				return null;    // Detected non-uniform scaling, don't want that matrix.
 
 			// Cancel the scaling
-			Vector4 rotationValues = tform.rotationMatrix;
+			Vector4 rotationValues = tform.rotationMatrix();
 			Vector2 scalingInv = Vector2.One / scaling;
 			Vector4 scalingInv4 = new Vector4( scalingInv.X, scalingInv.X, scalingInv.Y, scalingInv.Y );
 			rotationValues *= scalingInv4;
-			Matrix flipRotate = Matrix.createRotation( ref rotationValues );
+			Matrix3x2 flipRotate = MathUtils.createRotation( ref rotationValues );
 
 			// This one only contains rotation and flip.
-			Vector2 vec = flipRotate.transformVector( Vector2.UnitX ).absolute();
+
+			Vector2 vec = Vector2.Transform( Vector2.UnitX, flipRotate ).absolute();
 			if( vec.X >= rotationTolerance && vec.Y >= rotationTolerance )
 				return null;
 
 			// OK, the matrix transformed X unit vector into something axis-aligned. Probably an integer matrix.
-			var key = (snapFloat( flipRotate.m11 ), snapFloat( flipRotate.m12 ), snapFloat( flipRotate.m21 ), snapFloat( flipRotate.m22 ));
+			var key = (snapFloat( flipRotate.M11 ), snapFloat( flipRotate.M12 ), snapFloat( flipRotate.M21 ), snapFloat( flipRotate.M22 ));
 			if( lookup.TryGetValue( key, out var v ) )
 				return v;
 			return null;

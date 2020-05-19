@@ -7,7 +7,6 @@ using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Draw;
 using Vrmac.Input;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace RenderSamples
 {
@@ -35,7 +34,7 @@ namespace RenderSamples
 			Rect rcImage = viewboxController.getImageBox();
 			using( var dc = context.drawDevice.begin( swapChainRgb, swapChainDepthStencil, background ) )
 			{
-				Matrix imageRotation = rotationMatrix( dev.viewportSize, rotationAngle );
+				Matrix3x2 imageRotation = rotationMatrix( dev.viewportSize, rotationAngle );
 				dc.transform.push( imageRotation );
 
 				image.render( dc, rcImage, boxesOpacity );
@@ -50,9 +49,9 @@ namespace RenderSamples
 			printFps();
 		}
 
-		static Matrix rotationMatrix( Vector2 vps, float angle )
+		static Matrix3x2 rotationMatrix( Vector2 vps, float angle )
 		{
-			return Matrix.createRotation( angle, vps / 2 );
+			return Matrix3x2.CreateRotation( angle, vps * 0.5f );
 		}
 
 		void iDeltaTimeUpdate.tick( float elapsedSeconds )

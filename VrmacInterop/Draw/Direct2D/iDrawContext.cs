@@ -5,7 +5,6 @@ using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace Vrmac.Direct2D
 {
@@ -26,14 +25,14 @@ namespace Vrmac.Direct2D
 
 		void fillMesh( id2Mesh mesh, iBrush brush );
 
-		void setTransform( [In] ref Matrix transform );
+		void setTransform( [In] ref Matrix3x2 transform );
 
 		void setDpiScaling( double scale );
 		void getDpiScaling( out double scale );
 		double dpiScaling { get; set; }
 
-		[RetValIndex] iGeometryRealization createFilledGeometryRealization( iGeometry geometry, [In] ref Matrix transform );
-		[RetValIndex] iGeometryRealization createStrokedGeometryRealization( iGeometry geometry, [In] ref Matrix transform, float strokeWidth, iStrokeStyle strokeStyle );
+		[RetValIndex] iGeometryRealization createFilledGeometryRealization( iGeometry geometry, [In] ref Matrix3x2 transform );
+		[RetValIndex] iGeometryRealization createStrokedGeometryRealization( iGeometry geometry, [In] ref Matrix3x2 transform, float strokeWidth, iStrokeStyle strokeStyle );
 		void drawGeometryRealization( iGeometryRealization geometry, iBrush brush );
 	}
 }

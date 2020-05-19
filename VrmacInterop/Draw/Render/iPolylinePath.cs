@@ -1,5 +1,6 @@
 ﻿using ComLight;
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace Vrmac.Draw
@@ -72,6 +73,6 @@ namespace Vrmac.Draw
 		void swap( iPolylinePath that );
 
 		/// <summary>Clips the path to viewport, write results into another path.</summary>
-		void clip( float strokeWidth, [In] ref Matrix transform, IntPtr clipRectOrNull, iPolylinePath destPath, out eClipResult clipResult );
+		void clip( float strokeWidth, [In] ref Matrix3x2 transform, IntPtr clipRectOrNull, iPolylinePath destPath, out eClipResult clipResult );
 	}
 }

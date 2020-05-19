@@ -1,5 +1,6 @@
 ﻿using Diligent.Graphics;
 using System;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Vrmac.Draw.Main;
@@ -205,12 +206,12 @@ namespace Vrmac.Draw.Shaders
 			{
 				ref sDrawCall src = ref drawCalls[ i ];
 				ref sDrawCallData dest = ref result[ i ];
-				ref Matrix m = ref src.transform;
+				ref Matrix3x2 m = ref src.transform;
 				// Rotation portion of the matrix
-				dest.rotation = m.rotationMatrix;
+				dest.rotation = m.rotationMatrix();
 				// Translation portion of the matrix
-				dest.translationAndVaa.X = m.dx;
-				dest.translationAndVaa.Y = m.dy;
+				dest.translationAndVaa.X = m.M31;
+				dest.translationAndVaa.Y = m.M32;
 				// Z value
 				dest.translationAndVaa.Z = depthValues.value( src.order.z );
 				// VAA value, only used by thick lines, BTW

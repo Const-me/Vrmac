@@ -1,8 +1,8 @@
 ﻿using ComLight;
-using Diligent.Graphics;
 using System;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace Vrmac.Direct2D
 {
@@ -14,7 +14,7 @@ namespace Vrmac.Direct2D
 		IntPtr getNativePointer();
 
 		/// <summary>Get geometry bounding box, after the specified transform is applied</summary>
-		[RetValIndex] new Rect getBounds( ref Matrix transform );
+		[RetValIndex] new Rect getBounds( [In] ref Matrix3x2 transform );
 	}
 
 	/// <summary>Describes a two-dimensional rectangle</summary>
@@ -25,7 +25,7 @@ namespace Vrmac.Direct2D
 		new IntPtr getNativePointer();
 
 		/// <summary>Get geometry bounding box, after the specified transform is applied</summary>
-		[RetValIndex] new Rect getBounds( ref Matrix transform );
+		[RetValIndex] new Rect getBounds( [In] ref Matrix3x2 transform );
 
 		/// <summary>Retrieves the rectangle that describes the rectangle geometry's dimensions.</summary>
 		void getRectangle( out Rect rect );
@@ -41,7 +41,7 @@ namespace Vrmac.Direct2D
 		new IntPtr getNativePointer();
 
 		/// <summary>Get geometry bounding box, after the specified transform is applied</summary>
-		[RetValIndex] new Rect getBounds( ref Matrix transform );
+		[RetValIndex] new Rect getBounds( [In] ref Matrix3x2 transform );
 	}
 
 	/// <summary>Encapsulates a device- and transform-dependent representation of a filled or stroked geometry.</summary>

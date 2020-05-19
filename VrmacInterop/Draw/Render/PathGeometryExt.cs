@@ -32,13 +32,13 @@ namespace Vrmac.Draw
 		}
 
 		/// <summary>True if the transformed approximate bounds of the geometry + stroke intersects with a default clipping rectangle [ -1, -1, +1, +1 ]</summary>
-		public static bool testApproximateBounds( this iPathGeometry pathGeometry, ref Matrix transform, float strokeWidth = 0 )
+		public static bool testApproximateBounds( this iPathGeometry pathGeometry, ref Matrix3x2 transform, float strokeWidth = 0 )
 		{
 			return pathGeometry.ioTestApproximateBounds( ref transform, strokeWidth, IntPtr.Zero );
 		}
 
 		/// <summary>True if the transformed approximate bounds of the geometry + stroke intersects with a specified clipping rectangle</summary>
-		public static bool testApproximateBounds( this iPathGeometry pathGeometry, ref Matrix transform, ref Rect clipRect, float strokeWidth = 0 )
+		public static bool testApproximateBounds( this iPathGeometry pathGeometry, ref Matrix3x2 transform, ref Rect clipRect, float strokeWidth = 0 )
 		{
 			unsafe
 			{
@@ -101,14 +101,14 @@ namespace Vrmac.Draw
 		}
 
 		/// <summary>Tessellate splines and clip the result to viewport, using default clipping rectangle</summary>
-		public static eClipResult buildClippedPolylines( this iPathGeometry path, iPolylinePath poly, Matrix transform, float precision, float strokeWidth = 0 )
+		public static eClipResult buildClippedPolylines( this iPathGeometry path, iPolylinePath poly, Matrix3x2 transform, float precision, float strokeWidth = 0 )
 		{
 			path.buildPolylines( precision, strokeWidth, ref transform, IntPtr.Zero, poly, out var res );
 			return res;
 		}
 
 		/// <summary>Tessellate splines and clip the result to viewport, using specified clipping rectangle</summary>
-		public static eClipResult buildClippedPolylines( this iPathGeometry path, iPolylinePath poly, Rect clipRect, Matrix transform, float precision, float strokeWidth = 0 )
+		public static eClipResult buildClippedPolylines( this iPathGeometry path, iPolylinePath poly, Rect clipRect, Matrix3x2 transform, float precision, float strokeWidth = 0 )
 		{
 			unsafe
 			{
@@ -119,14 +119,14 @@ namespace Vrmac.Draw
 		}
 
 		/// <summary>Clip the polyline to viewport, using default clipping rectangle</summary>
-		public static eClipResult clip( this iPolylinePath source, iPolylinePath dest, Matrix transform, float strokeWidth = 0 )
+		public static eClipResult clip( this iPolylinePath source, iPolylinePath dest, Matrix3x2 transform, float strokeWidth = 0 )
 		{
 			source.clip( strokeWidth, ref transform, IntPtr.Zero, dest, out var res );
 			return res;
 		}
 
 		/// <summary>Clip the polyline to viewport, using specified clipping rectangle</summary>
-		public static eClipResult clip( this iPolylinePath source, iPolylinePath dest, Rect clipRect, Matrix transform, float strokeWidth = 0 )
+		public static eClipResult clip( this iPolylinePath source, iPolylinePath dest, Rect clipRect, Matrix3x2 transform, float strokeWidth = 0 )
 		{
 			unsafe
 			{

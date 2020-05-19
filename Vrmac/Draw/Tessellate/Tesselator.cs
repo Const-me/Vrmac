@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Threading;
 using Vrmac.Draw.Shaders;
 
@@ -40,7 +41,7 @@ namespace Vrmac.Draw.Tessellate
 			releaseMeshes();
 		}
 
-		sPendingDrawCall iTesselator.fill( iPathGeometry path, ref Matrix tform, float pixel, eBuildFilledMesh fillOptions, int instance )
+		sPendingDrawCall iTesselator.fill( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, int instance )
 		{
 			var job = postJob( path, instance, ref tform, fillOptions, pixel, null );
 
@@ -48,7 +49,7 @@ namespace Vrmac.Draw.Tessellate
 			return new sPendingDrawCall( job, rpf, 1 );
 		}
 
-		sPendingDrawCall iTesselator.fillAndStroke( iPathGeometry path, ref Matrix tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance )
+		sPendingDrawCall iTesselator.fillAndStroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance )
 		{
 			var job = postJob( path, instance, ref tform, fillOptions, pixel, stroke );
 
@@ -57,7 +58,7 @@ namespace Vrmac.Draw.Tessellate
 			return new sPendingDrawCall( job, eRenderPassFlags.Transparent, 1 );
 		}
 
-		sPendingDrawCall iTesselator.stroke( iPathGeometry path, ref Matrix tform, float pixel, sStrokeInfo stroke, int instance )
+		sPendingDrawCall iTesselator.stroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, sStrokeInfo stroke, int instance )
 		{
 			var job = postJob( path, instance, ref tform, eBuildFilledMesh.None, pixel, stroke );
 

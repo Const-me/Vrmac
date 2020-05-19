@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Vrmac;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace RenderSamples
 {
@@ -24,7 +23,7 @@ namespace RenderSamples
 	{
 		void viewbox( Rect rect );
 
-		iFigureBuilder newFigure( float? strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix transform );
+		iFigureBuilder newFigure( float? strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix3x2 transform );
 	}
 
 	// This SVG parser is only good to parse Tiger image from there: https://commons.wikimedia.org/wiki/File:Ghostscript_Tiger.svg
@@ -36,7 +35,7 @@ namespace RenderSamples
 			public float strokeWidth;
 			public Vector4? strokeColor;
 			public Vector4? fillColor;
-			public Matrix transform;
+			public Matrix3x2 transform;
 		}
 
 		public static void parse( Stream stream, iSvgSink sink )
@@ -81,7 +80,7 @@ namespace RenderSamples
 			if( stack.TryPeek( out var s ) )
 				return s;
 			s = new State();
-			s.transform = Matrix.identity;
+			s.transform = Matrix3x2.Identity;
 			return s;
 		}
 
@@ -103,7 +102,7 @@ namespace RenderSamples
 			return m.Groups[ idx + 1 ].Value;
 		}
 
-		static Matrix parseTransform( string str )
+		static Matrix3x2 parseTransform( string str )
 		{
 			var m = reMatrix.Match( str );
 			if( !m.Success )
@@ -117,13 +116,13 @@ namespace RenderSamples
 			for( int i = 0; i < 6; i++ )
 				floats[ i ] = (float)parseNumber( arr[ i ] );
 
-			Matrix r = new Matrix();
-			r.m11 = floats[ 0 ];
-			r.m12 = floats[ 2 ];
-			r.m21 = floats[ 1 ];
-			r.m22 = floats[ 3 ];
-			r.dx = floats[ 4 ];
-			r.dy = floats[ 5 ];
+			Matrix3x2 r = new Matrix3x2();
+			r.M11 = floats[ 0 ];
+			r.M12 = floats[ 2 ];
+			r.M21 = floats[ 1 ];
+			r.M22 = floats[ 3 ];
+			r.M31 = floats[ 4 ];
+			r.M32 = floats[ 5 ];
 			return r;
 		}
 

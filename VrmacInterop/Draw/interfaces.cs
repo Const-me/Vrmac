@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Vrmac.Draw
 {
@@ -6,7 +7,7 @@ namespace Vrmac.Draw
 	public interface iGeometry: IDisposable
 	{
 		/// <summary>Get geometry bounding box, after the specified transform is applied</summary>
-		Rect getBounds( ref Matrix transform );
+		Rect getBounds( ref Matrix3x2 transform );
 	}
 
 	/// <summary>Defines an object that paints an area.</summary>

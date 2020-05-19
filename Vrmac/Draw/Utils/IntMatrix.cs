@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using Matrix2D = Vrmac.Draw.Matrix;
-using Matrix3D = System.Numerics.Matrix4x4;
 
 namespace Vrmac.Draw
 {
@@ -63,10 +61,10 @@ namespace Vrmac.Draw
 		}
 
 		/// <summary>Cast the matrix to 3D rotation matrix</summary>
-		public static implicit operator Matrix3D( IntMatrix im )
+		public static implicit operator Matrix4x4( IntMatrix im )
 		{
 			MatrixValues mv = allMatrices[ im.value ];
-			Matrix3D m = Matrix3D.Identity;
+			Matrix4x4 m = Matrix4x4.Identity;
 			m.M11 = mv.m00;
 			m.M12 = mv.m01;
 			m.M21 = mv.m10;
@@ -77,24 +75,24 @@ namespace Vrmac.Draw
 		/// <summary>Cast the matrix to 2D rotation matrix</summary>
 		/// <remarks>The result of this operator may transform coordinates into negative half-spaces.</remarks>
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		public static implicit operator Matrix2D( IntMatrix im )
+		public static implicit operator Matrix3x2( IntMatrix im )
 		{
 			MatrixValues mv = allMatrices[ im.value ];
-			Matrix2D m = new Matrix2D();
-			m.m11 = mv.m00;
-			m.m12 = mv.m01;
-			m.m21 = mv.m10;
-			m.m22 = mv.m11;
+			Matrix3x2 m = new Matrix3x2();
+			m.M11 = mv.m00;
+			m.M12 = mv.m01;
+			m.M21 = mv.m10;
+			m.M22 = mv.m11;
 			return m;
 		}
 
 		/// <summary>Same as operator Vrmac.Draw.Matrix, but rotates/flips around the center of the rectangle, instead of [ 0, 0 ].</summary>
-		public Matrix2D as2d( Vector2 completeSize )
+		public Matrix3x2 as2d( Vector2 completeSize )
 		{
-			Matrix2D rotation = this;
+			Matrix3x2 rotation = this;
 			Vector2 transformedSize = this * completeSize;
-			rotation.dx = MathF.Max( 0, -transformedSize.X );
-			rotation.dy = MathF.Max( 0, -transformedSize.Y );
+			rotation.M31 = MathF.Max( 0, -transformedSize.X );
+			rotation.M32 = MathF.Max( 0, -transformedSize.Y );
 			return rotation;
 		}
 

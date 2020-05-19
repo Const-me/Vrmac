@@ -19,9 +19,9 @@ namespace RenderSamples
 			// sample = new HelloTriangle();
 			// sample = new Tutorial02_Cube();
 			// sample = new Tutorial03_Texturing();
-			sample = new SpinningTeapot();
+			// sample = new SpinningTeapot();
 			// sample = new ShapesSample();
-			// sample = new TigerSvgSample();
+			sample = new TigerSvgSample();
 			// sample = new SpritesSample();
 			// sample = new TextSample();
 

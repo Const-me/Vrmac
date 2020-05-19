@@ -1,6 +1,7 @@
 ﻿using ComLight;
 using System;
 using System.ComponentModel;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace Vrmac.Draw
@@ -95,18 +96,18 @@ namespace Vrmac.Draw
 		/// <summary>Compute bounding box after the transform is applied to this path</summary>
 		/// <param name="transform">Transformation matrix</param>
 		/// <remarks>Stroke radius is not included.</remarks>
-		[RetValIndex] new Rect getBounds( [In] ref Matrix transform );
+		[RetValIndex] new Rect getBounds( [In] ref Matrix3x2 transform );
 
 		/// <summary>Same as above but mush faster, should be well under 1µs.</summary>
 		/// <remarks>The implementation only uses 8 float values, min/max along XY and 2 diagonals, effectively a bounding octagon.
 		/// Provides a conservative estimate, guaranteed to contain the complete geometry. Stroke radius is not included.</remarks>
 		/// <param name="transform">Transformation matrix</param>
 		/// <param name="strokeWidth">Width of the stroke</param>
-		[RetValIndex] Rect getApproximateBounds( [In] ref Matrix transform, float strokeWidth = 0 );
+		[RetValIndex] Rect getApproximateBounds( [In] ref Matrix3x2 transform, float strokeWidth = 0 );
 
 		/// <summary>True if the transformed approximate bounds intersects with a rectangle.</summary>
 		[EditorBrowsable( EditorBrowsableState.Never )]
-		bool ioTestApproximateBounds( [In] ref Matrix transform, float strokeWidth, IntPtr clipRectOrNull );
+		bool ioTestApproximateBounds( [In] ref Matrix3x2 transform, float strokeWidth, IntPtr clipRectOrNull );
 
 		/// <summary>Convert splines into polylines, with specified precision.</summary>
 		/// <remarks>For paths made of polygons (without splines), this just calls memcpy couple times.</remarks>
@@ -114,6 +115,6 @@ namespace Vrmac.Draw
 
 		/// <summary>Convert splines into polylines, with specified precision, also clip everything to viewport.</summary>
 		/// <remarks>The method uses SIMD a lot. On PC, it requires a CPU supporting SSE4.1 and FMA3 instructions.</remarks>
-		void buildPolylines( float precision, float strokeWidth, [In] ref Matrix transform, IntPtr clipRectOrNull, iPolylinePath polyPath, out eClipResult clipResult );
+		void buildPolylines( float precision, float strokeWidth, [In] ref Matrix3x2 transform, IntPtr clipRectOrNull, iPolylinePath polyPath, out eClipResult clipResult );
 	}
 }

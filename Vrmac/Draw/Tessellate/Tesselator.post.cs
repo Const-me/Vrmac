@@ -2,6 +2,7 @@
 using System.Threading;
 using Table = System.Runtime.CompilerServices.ConditionalWeakTable<Vrmac.Draw.iPathGeometry, Vrmac.Draw.Tessellate.Meshes>;
 using MultiTable = System.Runtime.CompilerServices.ConditionalWeakTable<Vrmac.Draw.iPathGeometry, System.Collections.Generic.Dictionary<int, Vrmac.Draw.Tessellate.Meshes>>;
+using System.Numerics;
 
 namespace Vrmac.Draw.Tessellate
 {
@@ -44,7 +45,7 @@ namespace Vrmac.Draw.Tessellate
 			return meshes;
 		}
 
-		iTessellatedMeshes postJob( iPathGeometry path, int instance, ref Matrix tform, eBuildFilledMesh filled, float pixel, sStrokeInfo? stroke )
+		iTessellatedMeshes postJob( iPathGeometry path, int instance, ref Matrix3x2 tform, eBuildFilledMesh filled, float pixel, sStrokeInfo? stroke )
 		{
 			if( null == path )
 				throw new ArgumentNullException();

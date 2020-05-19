@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace RenderSamples
 {
@@ -46,7 +45,7 @@ namespace RenderSamples
 			readonly Vector4? fillColor;
 			readonly Vector4? strokeColor;
 			readonly float strokeWidth;
-			readonly Matrix matrix;
+			readonly Matrix3x2 matrix;
 
 			static bool hasStroke( float? strokeWidth, Vector4? strokeColor )
 			{
@@ -57,7 +56,7 @@ namespace RenderSamples
 				return hasStroke( strokeWidth, strokeColor );
 			}
 
-			public bool isSame( float strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix matrix )
+			public bool isSame( float strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix3x2 matrix )
 			{
 				if( fillColor != this.fillColor )
 					return false;
@@ -73,7 +72,7 @@ namespace RenderSamples
 			readonly PathBuilder path;
 			Vrmac.Draw.iFigureBuilder figure;
 
-			public FigureBuilder( float strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix transform )
+			public FigureBuilder( float strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix3x2 transform )
 			{
 				this.strokeWidth = strokeWidth;
 				this.strokeColor = strokeColor;
@@ -96,7 +95,7 @@ namespace RenderSamples
 		FigureBuilder figure = null;
 		readonly List<(SvgPathStyle, iPathData)> paths = new List<(SvgPathStyle, iPathData)>();
 
-		iFigureBuilder iSvgSink.newFigure( float? strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix transform )
+		iFigureBuilder iSvgSink.newFigure( float? strokeWidth, Vector4? strokeColor, Vector4? fillColor, Matrix3x2 transform )
 		{
 			fillColor = SvgUtils.fixFill( fillColor );
 			float sw = SvgUtils.fixStroke( strokeWidth, ref strokeColor );

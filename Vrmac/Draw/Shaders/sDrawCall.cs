@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Vrmac.Draw.Main;
 using Vrmac.Draw.Text;
 
@@ -28,14 +29,14 @@ namespace Vrmac.Draw.Shaders
 
 	struct sDrawCall
 	{
-		public Matrix transform;
+		public Matrix3x2 transform;
 		public readonly int foreground, background;
 		public readonly float mixFactor;
 		public readonly DrawCallType drawCall;
 		public readonly Order order;
 		public readonly float vaa;
 
-		internal sDrawCall( DrawCallType dc, ref Matrix trans, float vaa, int foreground, int background, float mixFactor, Order order )
+		internal sDrawCall( DrawCallType dc, ref Matrix3x2 trans, float vaa, int foreground, int background, float mixFactor, Order order )
 		{
 			drawCall = dc;
 			transform = trans;
@@ -48,26 +49,26 @@ namespace Vrmac.Draw.Shaders
 
 		const int transparentIndex = (int)eNamedColor.Transparent;
 
-		public static sDrawCall solidColorFill( Order order, ref Matrix trans, int color )
+		public static sDrawCall solidColorFill( Order order, ref Matrix3x2 trans, int color )
 		{
 			eVaaKind vaa = BuiltMeshesCache.filledMeshesVaa ? eVaaKind.Filled : eVaaKind.None;
 			DrawCallType dc = new DrawCallType( eMesh.Filled, vaa );
 			return new sDrawCall( dc, ref trans, 0, color, transparentIndex, MiscUtils.one, order );
 		}
 
-		public static sDrawCall builtinShapeNoVaa( Order order, ref Matrix trans, int color )
+		public static sDrawCall builtinShapeNoVaa( Order order, ref Matrix3x2 trans, int color )
 		{
 			DrawCallType dc = new DrawCallType( eMesh.Filled, eVaaKind.None );
 			return new sDrawCall( dc, ref trans, 0, color, transparentIndex, MiscUtils.one, order );
 		}
 
-		public static sDrawCall sprite( Order order, ref Matrix trans, int color )
+		public static sDrawCall sprite( Order order, ref Matrix3x2 trans, int color )
 		{
 			DrawCallType dc = new DrawCallType( eBrush.Sprite, eMesh.SpriteRectangle, eVaaKind.None );
 			return new sDrawCall( dc, ref trans, 0, color, 0, 0, order );
 		}
 
-		public static sDrawCall drawText( Order order, ref Matrix trans, int color, int backgroundColor, bool opaqueBackground, float physicalPixelSize, eTextRendering textRendering )
+		public static sDrawCall drawText( Order order, ref Matrix3x2 trans, int color, int backgroundColor, bool opaqueBackground, float physicalPixelSize, eTextRendering textRendering )
 		{
 			eMesh mesh = ( textRendering == eTextRendering.GrayscaleTransformed ) ? eMesh.TransformedText : eMesh.GlyphRun;
 			eBrush brush = opaqueBackground ? eBrush.OpaqueColor : eBrush.SolidColor;
@@ -82,7 +83,7 @@ namespace Vrmac.Draw.Shaders
 			return new sDrawCall( dc, ref trans, physicalPixelSize, color, backgroundColor, MiscUtils.one, order );
 		}
 
-		public static sDrawCall solidColorStroke( Order order, ref Matrix trans, ref StrokeRenderParams srp )
+		public static sDrawCall solidColorStroke( Order order, ref Matrix3x2 trans, ref StrokeRenderParams srp )
 		{
 			DrawCallType dc = new DrawCallType( eMesh.Stroked, srp.vaa );
 			return new sDrawCall( dc, ref trans, srp.vaaScaling,
@@ -90,13 +91,13 @@ namespace Vrmac.Draw.Shaders
 				order );
 		}
 
-		static sDrawCall stroke( eVaaKind vaaKind, ref Matrix trans, float vaaMul, int col, Order order )
+		static sDrawCall stroke( eVaaKind vaaKind, ref Matrix3x2 trans, float vaaMul, int col, Order order )
 		{
 			DrawCallType dc = new DrawCallType( eMesh.Stroked, vaaKind );
 			return new sDrawCall( dc, ref trans, vaaMul, col, transparentIndex, MiscUtils.one, order );
 		}
 
-		public static sDrawCall scaledStroke( Order order, ref Matrix trans, StrokeRenderParams srp, float newPixelSize )
+		public static sDrawCall scaledStroke( Order order, ref Matrix3x2 trans, StrokeRenderParams srp, float newPixelSize )
 		{
 			/* int typeFlags = 0;
 			if( srp.isThinLine )

@@ -21,7 +21,7 @@ namespace Vrmac
 		public ShaderCache shaderCache { get; private set; }
 
 		/// <summary>True if the renderer uses OpenGL or OpenGL ES. You probably need this value because perspective projection matrices use slightly different math.</summary>
-		/// <seealso cref="MathUtils.createPerspectiveFieldOfView(float, float, float, float, bool)" />
+		/// <seealso cref="DiligentMatrices.createPerspectiveFieldOfView(float, float, float, float, bool)" />
 		public bool isOpenGlDevice { get; private set; }
 
 		/// <summary>Current DPI scale setting</summary>

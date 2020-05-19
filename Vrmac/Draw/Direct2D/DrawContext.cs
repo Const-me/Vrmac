@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Numerics;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace Vrmac.Direct2D
 {
@@ -52,7 +51,7 @@ namespace Vrmac.Direct2D
 		{
 			if( !transform.changed )
 				return;
-			Matrix m = transform.current;
+			Matrix3x2 m = transform.current;
 			context.setTransform( ref m );
 			transform.clearChanged();
 		}

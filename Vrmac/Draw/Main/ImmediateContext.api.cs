@@ -11,7 +11,7 @@ namespace Vrmac.Draw.Main
 		// === Abstract methods ====
 
 		/// <summary>Transform from the coordinate systems of the input geometry into clip space.</summary>
-		protected abstract void getCurrentTransform( out Matrix matrix, out float physicalPixelSize );
+		protected abstract void getCurrentTransform( out Matrix3x2 matrix, out float physicalPixelSize );
 		protected abstract CPoint transformToPhysicalPixels( Vector2 point, out IntMatrix? intMatrix );
 		/// <summary>Scaling component of the top matrix on the stack. Used to try to fix lines when re-playing a list.</summary>
 		protected abstract Vector2 getUserScaling();
@@ -45,7 +45,7 @@ namespace Vrmac.Draw.Main
 
 		protected void fillGeometry( iPathGeometry path, SolidColorData color, int instance = 0 )
 		{
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			if( !path.testApproximateBounds( ref tform ) || color.brushType == eBrushType.Null )
 				return;
 
@@ -63,7 +63,7 @@ namespace Vrmac.Draw.Main
 
 		protected void strokeGeometry( iPathGeometry path, SolidColorData color, float width, ref sStrokeStyle strokeStyle, int instance = 0 )
 		{
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			if( !path.testApproximateBounds( ref tform, width ) || color.brushType == eBrushType.Null )
 				return;
 
@@ -89,7 +89,7 @@ namespace Vrmac.Draw.Main
 				return;
 			}
 
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			if( !path.testApproximateBounds( ref tform, width ) )
 				return;
 
@@ -106,7 +106,7 @@ namespace Vrmac.Draw.Main
 
 		protected void drawRectangle( ref Rect rectangle, float width, int colorIndex )
 		{
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			var transformedRect = tform.transformRectangle( ref rectangle );
 			if( !DrawDevice.clipSpaceRectangle.intersects( ref transformedRect ) )
 				return;
@@ -119,7 +119,7 @@ namespace Vrmac.Draw.Main
 
 		protected void fillRectangle( ref Rect rectangle, SolidColorData color )
 		{
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			var transformedRect = tform.transformRectangle( ref rectangle );
 			if( !DrawDevice.clipSpaceRectangle.intersects( ref transformedRect ) || color.brushType == eBrushType.Null )
 				return;
@@ -131,7 +131,7 @@ namespace Vrmac.Draw.Main
 
 		protected void drawSprite( ref Rect rectangle, ref Sprite uv )
 		{
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			var transformedRect = tform.transformRectangle( ref rectangle );
 			if( !DrawDevice.clipSpaceRectangle.intersects( ref transformedRect ) )
 				return;
@@ -157,7 +157,7 @@ namespace Vrmac.Draw.Main
 
 		protected void drawText( string text, Font font, ref Rect rectangle, SolidColorData foreground, SolidColorData background )
 		{
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			var transformedRect = tform.transformRectangle( ref rectangle );
 			if( !DrawDevice.clipSpaceRectangle.intersects( ref transformedRect ) || foreground.brushType == eBrushType.Null )
 				return;
@@ -181,7 +181,7 @@ namespace Vrmac.Draw.Main
 
 		protected void drawConsoleText( string text, int width, Font font, Vector2 position, SolidColorData foreground, SolidColorData background )
 		{
-			getCurrentTransform( out Matrix tform, out float pixel );
+			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			IntMatrix? intMtx;
 			CPoint startingPoint = transformToPhysicalPixels( position, out intMtx );
 			if( !intMtx.HasValue )

@@ -24,9 +24,9 @@ namespace Vrmac.Draw.Main
 			this.context3d = context3d;
 			paletteTexture = new PaletteTexture( context3d );
 			context = new VrmacDrawContext( context3d, this, factory );
-			rootTransform = new Matrix();
-			rootTransform.dx = -1;
-			rootTransform.dy = 1;
+			rootTransform = new Matrix3x2();
+			rootTransform.M31 = -1;
+			rootTransform.M32 = 1;
 
 			onResized( context3d.swapChainSize, context3d.dpiScalingFactor );
 			context3d.swapChainResized.add( this, onResized );
@@ -34,14 +34,14 @@ namespace Vrmac.Draw.Main
 			fontTextures = new Textures( context3d, factory );
 		}
 
-		Matrix rootTransform;
+		Matrix3x2 rootTransform;
 
 		void onResized( CSize newSize, double dpi )
 		{
 			dpiScaling = new DpiScaling( dpi );
 			viewportSize = new Vector2( (float)( newSize.cx / dpi ), (float)( newSize.cy / dpi ) );
-			rootTransform.m11 = (float)( 2.0 / viewportSize.X );
-			rootTransform.m22 = (float)( -2.0 / viewportSize.Y );
+			rootTransform.M11 = (float)( 2.0 / viewportSize.X );
+			rootTransform.M22 = (float)( -2.0 / viewportSize.Y );
 
 			foreach( var sub in resized )
 				sub( viewportSize, dpi );

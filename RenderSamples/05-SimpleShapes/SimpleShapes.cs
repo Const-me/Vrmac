@@ -5,7 +5,6 @@ using System.Numerics;
 using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace RenderSamples
 {
@@ -185,9 +184,9 @@ namespace RenderSamples
 			// dc.drawGeometry( shapes[ i ], brush( i * 2 + 1 ), strokeWidth, strokeStyle );
 		}
 
-		static Matrix rotationMatrix( Vector2 vps, float angle )
+		static Matrix3x2 rotationMatrix( Vector2 vps, float angle )
 		{
-			return Matrix.createRotation( angle, vps / 2 );
+			return Matrix3x2.CreateRotation( angle, vps * 0.5f );
 		}
 
 		protected override void render( ITextureView swapChainRgb, ITextureView swapChainDepthStencil )

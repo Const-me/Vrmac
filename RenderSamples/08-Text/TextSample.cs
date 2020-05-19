@@ -4,7 +4,6 @@ using System.Numerics;
 using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace RenderSamples
 {
@@ -68,8 +67,8 @@ namespace RenderSamples
 
 			using( var dc = dev.begin( swapChainRgb, swapChainDepthStencil, backgroundColor ) )
 			{
-				Matrix imageRotation = rotationMatrix( dev.viewportSize, -0.11f );
-				Matrix trans = Matrix.createTranslation( 0, -70 );
+				Matrix3x2 imageRotation = rotationMatrix( dev.viewportSize, -0.11f );
+				Matrix3x2 trans = Matrix3x2.CreateTranslation( 0, -70 );
 				dc.transform.push( imageRotation * trans );
 				dc.drawText( "Hello World", comicSans.font, rect, black, background );
 				dc.transform.pop();
@@ -95,9 +94,9 @@ namespace RenderSamples
 			}
 		}
 
-		static Matrix rotationMatrix( Vector2 vps, float angle )
+		static Matrix3x2 rotationMatrix( Vector2 vps, float angle )
 		{
-			return Matrix.createRotation( angle, vps / 2 );
+			return Matrix3x2.CreateRotation( angle, vps * 0.5f );
 		}
 
 		void iDeltaTimeUpdate.tick( float elapsedSeconds )

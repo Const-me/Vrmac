@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using Vrmac;
 using Vrmac.Draw;
-using Matrix = Vrmac.Draw.Matrix;
 
 namespace RenderSamples
 {
@@ -13,9 +12,9 @@ namespace RenderSamples
 		public readonly Vector4? fillColor;
 		public readonly Vector4? strokeColor;
 		public readonly float strokeWidth;
-		public readonly Matrix matrix;
+		public readonly Matrix3x2 matrix;
 
-		public SvgPathStyle( Vector4? fillColor, Vector4? strokeColor, float strokeWidth, Matrix matrix )
+		public SvgPathStyle( Vector4? fillColor, Vector4? strokeColor, float strokeWidth, Matrix3x2 matrix )
 		{
 			this.fillColor = fillColor;
 			this.strokeColor = strokeColor;
@@ -55,7 +54,7 @@ namespace RenderSamples
 			this.viewBox = viewBox;
 		}
 
-		void renderBox( iDrawContext context, iGeometry geometry, int id, float boundingBoxesOpacity, ref Matrix tform )
+		void renderBox( iDrawContext context, iGeometry geometry, int id, float boundingBoxesOpacity, ref Matrix3x2 tform )
 		{
 			// if( id != 0 ) return;
 
@@ -77,9 +76,9 @@ namespace RenderSamples
 
 		public void render( iDrawContext context, Rect? box, float boundingBoxesOpacity )
 		{
-			Matrix view = Matrix.identity;
+			Matrix3x2 view = Matrix3x2.Identity;
 			if( viewBox.HasValue && box.HasValue )
-				view = Matrix.createViewbox( box.Value, viewBox.Value );
+				view = MathUtils.createViewbox( box.Value, viewBox.Value );
 
 			if( boundingBoxesOpacity > 0 )
 				boundingBoxesOpacity = MathF.Min( boundingBoxesOpacity, 1 );
@@ -87,10 +86,10 @@ namespace RenderSamples
 			int i = 0;
 			using( var t = context.transform.transform( view ) )
 			{
-				Matrix m = paths[ 0 ].style.matrix;
+				Matrix3x2 m = paths[ 0 ].style.matrix;
 				context.transform.push( m );
 
-				Matrix transform = context.transform.current;
+				Matrix3x2 transform = context.transform.current;
 
 				foreach( var p in paths )
 				{

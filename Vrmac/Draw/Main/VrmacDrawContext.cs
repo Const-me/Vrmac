@@ -29,12 +29,12 @@ namespace Vrmac.Draw.Main
 			};
 		}
 
-		Matrix rootTransform;
+		Matrix3x2 rootTransform;
 
 		ITextureView rgbTarget;
 		bool cleared;
 
-		public iImmediateDrawContext begin( ref Matrix rootTransform, SwapChainFormats swapFormat, ITextureView rgbTarget, bool opaqueColor )
+		public iImmediateDrawContext begin( ref Matrix3x2 rootTransform, SwapChainFormats swapFormat, ITextureView rgbTarget, bool opaqueColor )
 		{
 			this.rgbTarget = rgbTarget;
 			this.rootTransform = rootTransform;
@@ -79,23 +79,23 @@ namespace Vrmac.Draw.Main
 		}
 
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
-		float computePixelSize( ref Matrix curr )
+		float computePixelSize( ref Matrix3x2 curr )
 		{
 			float scaling = curr.getScaling().maxCoordinate();
 			return device.dpiScaling.mulUnits / scaling;
 		}
 
-		protected override void getCurrentTransform( out Matrix matrix, out float pixel )
+		protected override void getCurrentTransform( out Matrix3x2 matrix, out float pixel )
 		{
-			Matrix curr = transform.current;
+			Matrix3x2 curr = transform.current;
 			matrix = curr * rootTransform;
 			pixel = computePixelSize( ref curr );
 		}
 
 		protected override CPoint transformToPhysicalPixels( Vector2 point, out IntMatrix? intMatrix )
 		{
-			Matrix tform = transform.current;
-			point = tform.transformVector( point );
+			Matrix3x2 tform = transform.current;
+			point = Vector2.Transform( point, tform );
 			point *= device.dpiScaling.mulPixels;
 			intMatrix = tform.snapMatrixToInt();
 			return point.roundToInt();
@@ -128,7 +128,7 @@ namespace Vrmac.Draw.Main
 		{
 			TextureAtlas atlas = device.textureAtlas;
 			if( null == atlas )
-				throw new ApplicationException( "Load sprites into the atles first" );
+				throw new ApplicationException( "Load sprites into the atlas first" );
 			atlas.update();
 			var uv = atlas[ spriteIndex ];
 			drawSprite( ref rect, ref uv );
@@ -136,11 +136,11 @@ namespace Vrmac.Draw.Main
 
 		CSize iDrawContext.measureText( string text, float width, iFont fontInterface )
 		{
-			Matrix curr = transform.current;
+			Matrix3x2 curr = transform.current;
 			float pixel = computePixelSize( ref curr );
 			int widthPIxels = (int)MathF.Round( width / pixel );
 
-			Matrix tform = transform.current;
+			Matrix3x2 tform = transform.current;
 			eTextRendering renderMode = textRenderingStyle( tform.snapMatrixToInt() );
 
 			var font = (Font)fontInterface;

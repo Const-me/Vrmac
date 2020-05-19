@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Vrmac.Draw.Shaders;
 
 namespace Vrmac.Draw
@@ -56,11 +57,11 @@ namespace Vrmac.Draw
 		// The methods below return conservative estimates, i.e. max. count of draw calls and render passes.
 		// The instance argument refers to the instance number within frame. Any integer will work; for optimal performance however, they better be 0 or 1.
 
-		sPendingDrawCall fill( iPathGeometry path, ref Matrix tform, float pixel, eBuildFilledMesh fillOptions, int instance = 0 );
+		sPendingDrawCall fill( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, int instance = 0 );
 
-		sPendingDrawCall stroke( iPathGeometry path, ref Matrix tform, float pixel, sStrokeInfo stroke, int instance = 0 );
+		sPendingDrawCall stroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, sStrokeInfo stroke, int instance = 0 );
 
-		sPendingDrawCall fillAndStroke( iPathGeometry path, ref Matrix tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance = 0 );
+		sPendingDrawCall fillAndStroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance = 0 );
 
 		void syncThreads();
 
