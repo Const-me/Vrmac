@@ -42,7 +42,7 @@ namespace RenderSamples
 				if( customClipping )
 				{
 					dc.transform.pushIdentity();
-					var brush = dev.createSolidBrush( "#F0F" );
+					var brush = dev.createSolidBrush( ConsoleColor.Magenta );
 					dc.drawRectangle( customClippingRect.viewportFromClipSpace( dev.viewportSize ), brush, 2 );
 				}
 			}
@@ -93,6 +93,9 @@ namespace RenderSamples
 
 		void onRightMouseDrag( Vector2 diff )
 		{
+			Matrix3x2 imageRotation = Matrix3x2.CreateRotation( -rotationAngle );
+			diff = Vector2.TransformNormal( diff, imageRotation );
+
 			viewboxController.pan( diff );
 			context.queueRenderFrame();
 		}
@@ -144,6 +147,7 @@ namespace RenderSamples
 
 				case eKey.Home:
 					viewboxController.reset();
+					rotationAngle = default;
 					context.queueRenderFrame();
 					break;
 			}
