@@ -22,8 +22,6 @@ namespace Vrmac.Draw.Text
 
 		// return target
 		static readonly LabelExpression returnLabel = Expression.Label( Expression.Label( "returnTarget" ) );
-		// `return;`
-		static readonly GotoExpression returnExpression = Expression.Return( returnLabel.Target );
 
 		// `break;`
 		static readonly GotoExpression switchBreak = Expression.Break( Expression.Label( "breakLabel" ) );
