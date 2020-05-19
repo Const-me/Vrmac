@@ -1,6 +1,5 @@
-﻿using Diligent;
-using Diligent.Graphics;
-using System;
+﻿using System;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace Vrmac.Input

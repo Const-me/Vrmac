@@ -1,5 +1,6 @@
 ﻿using Diligent.Graphics;
 using System;
+using System.Numerics;
 using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Draw;

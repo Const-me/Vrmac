@@ -1,5 +1,5 @@
-﻿using Vrmac.Draw;
-using Vec4 = Diligent.Graphics.Vector4;
+﻿using System.Numerics;
+using Vrmac.Draw;
 
 namespace Vrmac.Direct2D
 {
@@ -7,7 +7,7 @@ namespace Vrmac.Direct2D
 	public static class DrawDeviceExt
 	{
 		/// <summary>Create solid color brush from premultiplied RGBA values</summary>
-		public static iSolidColorBrush createSolidBrush( this iDrawDevice device, Vec4 color )
+		public static iSolidColorBrush createSolidBrush( this iDrawDevice device, Vector4 color )
 		{
 			return device.createSolidColorBrush( ref color );
 		}
@@ -15,8 +15,7 @@ namespace Vrmac.Direct2D
 		/// <summary>Create solid color brush from color string like "blue" or "#ffccff44"</summary>
 		public static iSolidColorBrush createSolidBrush( this iDrawDevice device, string colorString )
 		{
-			Vec4 color = Color.parseNonPremultiplied( colorString );
-
+			Vector4 color = Color.parseNonPremultiplied( colorString );
 			return device.createSolidColorBrush( ref color );
 		}
 

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -140,9 +141,9 @@ namespace Vrmac.Utils
 				copyBatch( indexerBuffer, slice.Span );
 
 				// Update the box. Using the data from native memory because it has better locality, we only consume 72% of the source data, the rest is normals and BS.
-				BoundingBox bb = BoundingBox.CreateFromPoints( indexerBuffer.Slice( 0, batch * 3 ) );
+				BoundingBox bb = BoundingBox.compute( indexerBuffer.Slice( 0, batch * 3 ) );
 				if( box.HasValue )
-					box = BoundingBox.CreateMerged( box.Value, bb );
+					box = BoundingBox.union( box.Value, bb );
 				else
 					box = bb;
 

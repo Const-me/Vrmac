@@ -1,10 +1,9 @@
-﻿using Diligent.Graphics;
+﻿using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace Vrmac
 {
 	/// <summary>Screen information</summary>
-	[StructLayout( LayoutKind.Sequential )]
 	public struct sScreen
 	{
 		/// <summary>Screen resolution, probably in pixels</summary>

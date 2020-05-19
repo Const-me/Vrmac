@@ -1,10 +1,8 @@
-﻿using Diligent.Graphics;
-using System.Runtime.InteropServices;
+﻿using System.Numerics;
 
 namespace Vrmac.Draw.Shaders
 {
 	/// <summary>Metadata for a slice of vertices produced by a single draw command.</summary>
-	[StructLayout( LayoutKind.Sequential )]
 	struct sDrawCallData
 	{
 		/// <summary>2x2 rotate/flip/scale matrix</summary>

@@ -1,5 +1,5 @@
-﻿using Diligent.Graphics;
-using System;
+﻿using System;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Vrmac.Animation;
 
@@ -71,7 +71,7 @@ namespace Vrmac.Draw
 			if( relativeDuration >= 1 )
 				zoomLevelStarted = zoomLevelCurrent = zoomLevel;
 			else
-				zoomLevelCurrent = MathHelper.SmoothStep( zoomLevelStarted, zoomLevel, relativeDuration );
+				zoomLevelCurrent = MathUtils.smoothInterpolate( zoomLevelStarted, zoomLevel, relativeDuration );
 
 			// Deal with the zoom center
 			Vector2 prevFixed = getImageBox().getPoint( zoomFixedPoint );

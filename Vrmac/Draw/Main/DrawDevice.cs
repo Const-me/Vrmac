@@ -1,5 +1,5 @@
 ﻿using Diligent.Graphics;
-using System;
+using System.Numerics;
 using Vrmac.Draw.SwapChain;
 using Vrmac.Draw.Text;
 

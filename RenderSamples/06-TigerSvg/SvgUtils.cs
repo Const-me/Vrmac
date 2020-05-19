@@ -1,4 +1,4 @@
-﻿using Diligent.Graphics;
+﻿using System.Numerics;
 
 namespace RenderSamples
 {

@@ -1,5 +1,5 @@
-﻿using Diligent.Graphics;
-using System;
+﻿using System;
+using System.Numerics;
 using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Input;
@@ -201,7 +201,7 @@ namespace RenderSamples
 			if( relativeDuration >= 1 )
 				zoomLevelStarted = zoomLevelCurrent = zoomLevel;
 			else
-				zoomLevelCurrent = MathHelper.SmoothStep( zoomLevelStarted, zoomLevel, relativeDuration );
+				zoomLevelCurrent = MathUtils.smoothStep( zoomLevelStarted, zoomLevel, relativeDuration );
 			zoomFactor = 1.0f / MathF.Pow( zoomFactorMul, zoomLevelCurrent );
 		}
 	}

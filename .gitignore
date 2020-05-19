@@ -11,3 +11,6 @@ VrmacInterop/obj/
 Vrmac/linux-arm/libVrmac.so
 Vrmac/win10-x64/VrmacFT.dll
 Vrmac/win10-x64/Vrmac.dll
+RenderSamples/win10-x64/Vrmac.dll
+RenderSamples/win10-x64/VrmacFT.dll
+RenderSamples/linux-arm/libVrmac.so

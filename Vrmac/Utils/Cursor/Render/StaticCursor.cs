@@ -1,5 +1,6 @@
 ﻿using Diligent.Graphics;
 using System;
+using System.Numerics;
 using static Vrmac.Utils.Cursor.Render.Utils;
 
 namespace Vrmac.Utils.Cursor.Render

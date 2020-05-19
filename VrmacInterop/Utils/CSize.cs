@@ -1,7 +1,7 @@
 ﻿// TODO: comment them
 #pragma warning disable CS1591  // CS1591: Missing XML comment for publicly visible type or member
-using Diligent.Graphics;
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace Vrmac

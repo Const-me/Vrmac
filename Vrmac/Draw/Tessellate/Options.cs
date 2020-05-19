@@ -1,4 +1,4 @@
-﻿using Diligent.Graphics;
+﻿using System.Numerics;
 
 namespace Vrmac.Draw.Tessellate
 {
@@ -23,10 +23,10 @@ namespace Vrmac.Draw.Tessellate
 		static bool isSmallEnoughChange( Matrix a, Matrix b )
 		{
 			Vector2 diffTrans = a.translation - b.translation;
-			if( diffTrans.absolute().maxCoordinate > translationThreshold )
+			if( diffTrans.absolute().maxCoordinate() > translationThreshold )
 				return false;
 			Vector4 r1 = a.rotationMatrix - b.rotationMatrix;
-			if( r1.absolute().maxCoordinate > 0.015625f )
+			if( r1.absolute().maxCoordinate() > 0.015625f )
 				return false;
 			return true;
 		}

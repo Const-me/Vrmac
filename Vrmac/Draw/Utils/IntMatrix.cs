@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Matrix2D = Vrmac.Draw.Matrix;
-using Matrix3D = Diligent.Graphics.Matrix;
-using Vector2 = Diligent.Graphics.Vector2;
-using Vector4 = Diligent.Graphics.Vector4;
+using Matrix3D = System.Numerics.Matrix4x4;
 
 namespace Vrmac.Draw
 {

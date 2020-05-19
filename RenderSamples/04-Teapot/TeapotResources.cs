@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vrmac;
+using Matrix = System.Numerics.Matrix4x4;
 
 namespace RenderSamples
 {

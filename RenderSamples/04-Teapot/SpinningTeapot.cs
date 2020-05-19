@@ -1,9 +1,11 @@
 ﻿using Diligent.Graphics;
 using System;
+using System.Numerics;
 using System.Threading.Tasks;
 using Vrmac;
 using Vrmac.Input;
 using Vrmac.Utils;
+using Matrix = System.Numerics.Matrix4x4;
 
 namespace RenderSamples
 {
@@ -61,7 +63,7 @@ namespace RenderSamples
 				float NearPlane = 0.1f;
 				float FarPlane = 100;
 				// Projection matrix differs between DX and OpenGL
-				Matrix projection = Matrix.CreatePerspectiveFieldOfView( 0.25f * MathF.PI * motion.zoomFactor, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
+				Matrix projection = MathUtils.createPerspectiveFieldOfView( 0.25f * MathF.PI * motion.zoomFactor, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
 
 				resources.draw( ic, ref worldView, ref projection );
 			}

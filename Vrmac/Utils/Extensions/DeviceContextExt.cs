@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Vrmac;
 
 namespace Diligent.Graphics

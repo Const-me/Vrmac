@@ -1,4 +1,4 @@
-﻿using Diligent.Graphics;
+﻿using System.Numerics;
 
 namespace Vrmac.Utils.Cursor.Render
 {

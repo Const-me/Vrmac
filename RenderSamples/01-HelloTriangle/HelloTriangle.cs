@@ -1,4 +1,5 @@
 ﻿using Diligent.Graphics;
+using System.Numerics;
 using Vrmac;
 
 namespace RenderSamples

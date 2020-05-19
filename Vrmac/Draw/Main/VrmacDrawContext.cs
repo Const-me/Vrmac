@@ -1,5 +1,6 @@
 ﻿using Diligent.Graphics;
 using System;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Vrmac.Draw.Text;
 
@@ -80,7 +81,7 @@ namespace Vrmac.Draw.Main
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		float computePixelSize( ref Matrix curr )
 		{
-			float scaling = curr.getScaling().maxCoordinate;
+			float scaling = curr.getScaling().maxCoordinate();
 			return device.dpiScaling.mulUnits / scaling;
 		}
 

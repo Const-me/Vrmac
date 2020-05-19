@@ -1,5 +1,6 @@
 ﻿using Diligent.Graphics;
 using System;
+using System.Numerics;
 using Vrmac.Draw.Shaders;
 using Vrmac.Draw.Text;
 

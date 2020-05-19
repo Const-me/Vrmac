@@ -1,5 +1,7 @@
 ﻿using Diligent.Graphics;
+using System;
 using System.IO;
+using System.Numerics;
 using System.Reflection;
 using Vrmac;
 using Vrmac.Animation;
@@ -13,7 +15,7 @@ namespace RenderSamples
 	{
 		static readonly Vector4 background = Color.parse( "#777" );
 		Angle rotationAngle = new Angle();
-		const float rotationSpeed = MathHelper.Pi / 11;
+		const float rotationSpeed = MathF.PI / 11;
 		SvgImage image;
 		readonly ViewboxController viewboxController;
 

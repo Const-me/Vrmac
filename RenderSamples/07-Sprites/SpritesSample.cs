@@ -1,6 +1,7 @@
 ﻿using Diligent.Graphics;
 using System;
 using System.Linq;
+using System.Numerics;
 using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Draw;
@@ -84,7 +85,7 @@ namespace RenderSamples
 			context.animation.startDelta( this );
 		}
 
-		const float rotationSpeed = MathHelper.Pi / 11;
+		const float rotationSpeed = MathF.PI / 11;
 		Angle rotationAngle = new Angle();
 
 		void onResized( Vector2 size, double dpi )

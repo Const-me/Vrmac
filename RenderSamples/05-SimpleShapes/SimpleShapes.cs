@@ -1,6 +1,7 @@
 ﻿using Diligent.Graphics;
 using System;
 using System.Linq;
+using System.Numerics;
 using Vrmac;
 using Vrmac.Animation;
 using Vrmac.Draw;
@@ -102,7 +103,7 @@ namespace RenderSamples
 			rc = rc.deflate( 40, 20 );
 
 			shapes[ 0 ] = context.drawDevice.createPathGeometry( Shapes.roundedRectangle( rc, 10 ) );
-			shapes[ 1 ] = createPolygon( rc.center, rc.size.minCoordinate * 0.45f, 7 );
+			shapes[ 1 ] = createPolygon( rc.center, rc.size.minCoordinate() * 0.45f, 7 );
 			rcRandom = rc.deflate( 40, 20 );
 			shapes[ 2 ] = createWeirdShape();
 			Vector2 rcRandomSize = rcRandom.size.normalized();

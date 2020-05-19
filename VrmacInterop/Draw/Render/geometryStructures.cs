@@ -1,6 +1,5 @@
-﻿using Diligent.Graphics;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
+using System.Numerics;
 
 namespace Vrmac.Draw
 {
@@ -19,7 +18,6 @@ namespace Vrmac.Draw
 	}
 
 	/// <summary>Size of the mesh built by iPathGeometry object</summary>
-	[StructLayout( LayoutKind.Sequential )]
 	public struct sMeshDataSize
 	{
 		/// <summary>Count of vertices in the buffers</summary>
@@ -48,7 +46,6 @@ namespace Vrmac.Draw
 	};
 
 	/// <summary>2D vertex with extra 32 bits ID field</summary>
-	[StructLayout( LayoutKind.Sequential )]
 	public struct sVertexWithId
 	{
 		/// <summary>2D position of the vertex</summary>
@@ -64,7 +61,6 @@ namespace Vrmac.Draw
 	};
 
 	/// <summary>Same as above, but uses position fields for packed 16-bit integers</summary>
-	[StructLayout( LayoutKind.Sequential )]
 	public struct sGlyphVertex
 	{
 		/// <summary>Position in physical pixels</summary>

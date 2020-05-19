@@ -1,7 +1,7 @@
-﻿using Diligent.Graphics;
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Numerics;
 
 namespace RenderSamples
 {

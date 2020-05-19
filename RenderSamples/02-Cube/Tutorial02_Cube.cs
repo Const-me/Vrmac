@@ -1,5 +1,6 @@
 ﻿using Diligent.Graphics;
 using System;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Vrmac;
@@ -12,7 +13,7 @@ namespace RenderSamples
 		IPipelineState pipelineState;
 		IShaderResourceBinding resourceBinding;
 		IBuffer cubeVertexBuffer, cubeIndexBuffer, vsConstants;
-		Matrix worldViewProjMatrix;
+		Matrix4x4 worldViewProjMatrix;
 
 		void createPipelineState( IRenderDevice device )
 		{
@@ -43,7 +44,7 @@ namespace RenderSamples
 
 				// Create dynamic uniform buffer that will store our transformation matrix. Dynamic buffers can be frequently updated by the CPU.
 				BufferDesc CBDesc = new BufferDesc( false );
-				CBDesc.uiSizeInBytes = Marshal.SizeOf<Matrix>();
+				CBDesc.uiSizeInBytes = Marshal.SizeOf<Matrix4x4>();
 				CBDesc.Usage = Usage.Dynamic;
 				CBDesc.BindFlags = BindFlags.UniformBuffer;
 				CBDesc.CPUAccessFlags = CpuAccessFlags.Write;
@@ -193,7 +194,7 @@ namespace RenderSamples
 			ic.ClearDepthStencil( swapChainDepthStencil, ClearDepthStencilFlags.DepthFlag, 1.0f, 0 );
 
 			// Map the buffer and write current world-view-projection matrix
-			Matrix transposed = worldViewProjMatrix.transposed();
+			Matrix4x4 transposed = worldViewProjMatrix.transposed();
 			ic.writeBuffer( vsConstants, ref transposed );
 
 			// Bind vertex and index buffers
@@ -224,14 +225,14 @@ namespace RenderSamples
 			angle.rotate( velocity, elapsedSeconds );
 
 			// Set cube world view matrix
-			Matrix CubeWorldView = Matrix.CreateRotationY( angle )
-				* Matrix.CreateRotationX( MathF.PI * -0.1f )
-				* Matrix.CreateTranslation( 0, 0, 5 );
+			Matrix4x4 CubeWorldView = Matrix4x4.CreateRotationY( angle )
+				* Matrix4x4.CreateRotationX( MathF.PI * -0.1f )
+				* Matrix4x4.CreateTranslation( 0, 0, 5 );
 
 			float NearPlane = 0.1f;
 			float FarPlane = 100;
 			// Projection matrix differs between DX and OpenGL
-			Matrix Proj = Matrix.CreatePerspectiveFieldOfView( 0.25f * MathF.PI, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
+			Matrix4x4 Proj = MathUtils.createPerspectiveFieldOfView( 0.25f * MathF.PI, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
 			worldViewProjMatrix = CubeWorldView * Proj;
 		}
 
