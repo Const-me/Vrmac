@@ -51,7 +51,7 @@ namespace Vrmac
 			return new BoundingBox()
 			{
 				Min = Vector3.Min( a.Min, b.Min ),
-				Max = Vector3.Max( a.Min, b.Min )
+				Max = Vector3.Max( a.Max, b.Max )
 			};
 		}
 
@@ -60,6 +60,7 @@ namespace Vrmac
 		{
 			if( points.IsEmpty )
 				throw new ArgumentException();
+
 			Vector3 i = points[ 0 ];
 			Vector3 ax = i;
 			foreach( Vector3 pt in points )
@@ -73,6 +74,13 @@ namespace Vrmac
 				Min = i,
 				Max = ax
 			};
+		}
+
+		/// <summary>A string for debugger</summary>
+		public override string ToString()
+		{
+			Vector3 size = this.size;
+			return $"[ { Min.X }, { Min.Y }, { Min.Z } ] - [ { Max.X }, { Max.Y }, { Max.Z } ], size [ { size.X }, { size.Y }, { size.Z } ]";
 		}
 	}
 }

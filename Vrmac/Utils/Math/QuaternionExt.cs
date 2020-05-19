@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace Vrmac
@@ -39,7 +38,7 @@ namespace Vrmac
 			float half = length * 0.5f;
 			MathHelper.sinCos( half, out float sin, out float cos );
 
-			// Instead of normalizing the axis, we multiply W component by the length of it. This method normalizes result in the end.
+			// Instead of normalizing the axis, multiply W component by the length of it. This method normalizes result in the end.
 			Quaternion q = new Quaternion( vec.X * sin, vec.Y * sin, vec.Z * sin, length * cos );
 			q = q * quat;
 			q = Quaternion.Normalize( q );

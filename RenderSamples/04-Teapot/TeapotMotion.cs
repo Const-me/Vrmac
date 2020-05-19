@@ -196,12 +196,13 @@ namespace RenderSamples
 			}
 			anim.startProgress( zoomAnimation, this );
 		}
+
 		void iAnimationProgressUpdate.tick( float relativeDuration )
 		{
 			if( relativeDuration >= 1 )
 				zoomLevelStarted = zoomLevelCurrent = zoomLevel;
 			else
-				zoomLevelCurrent = MathUtils.smoothStep( zoomLevelStarted, zoomLevel, relativeDuration );
+				zoomLevelCurrent = MathUtils.smoothInterpolate( zoomLevelStarted, zoomLevel, relativeDuration );
 			zoomFactor = 1.0f / MathF.Pow( zoomFactorMul, zoomLevelCurrent );
 		}
 	}

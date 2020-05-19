@@ -57,13 +57,13 @@ namespace RenderSamples
 				Matrix world = teapotWorld * Matrix.CreateFromQuaternion( extraRotation * motion.rotation );
 				Matrix view = Matrix.CreateTranslation( 0, 0, 5 );
 				Vector3 cameraPos = new Vector3( 0, -3, 0 );
-				view = Matrix.CreateLookAt( cameraPos, Vector3.Zero, Vector3.UnitZ );
+				view = DiligentMatrices.createLookAt( cameraPos, Vector3.Zero, Vector3.UnitZ );
 				worldView = world * view;
 
 				float NearPlane = 0.1f;
 				float FarPlane = 100;
 				// Projection matrix differs between DX and OpenGL
-				Matrix projection = MathUtils.createPerspectiveFieldOfView( 0.25f * MathF.PI * motion.zoomFactor, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
+				Matrix projection = DiligentMatrices.createPerspectiveFieldOfView( 0.25f * MathF.PI * motion.zoomFactor, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
 
 				resources.draw( ic, ref worldView, ref projection );
 			}

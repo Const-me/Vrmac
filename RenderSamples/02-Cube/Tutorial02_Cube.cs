@@ -232,7 +232,7 @@ namespace RenderSamples
 			float NearPlane = 0.1f;
 			float FarPlane = 100;
 			// Projection matrix differs between DX and OpenGL
-			Matrix4x4 Proj = MathUtils.createPerspectiveFieldOfView( 0.25f * MathF.PI, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
+			Matrix4x4 Proj = DiligentMatrices.createPerspectiveFieldOfView( 0.25f * MathF.PI, context.aspectRatio, NearPlane, FarPlane, isOpenGlDevice );
 			worldViewProjMatrix = CubeWorldView * Proj;
 		}
 
