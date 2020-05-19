@@ -10,6 +10,7 @@ namespace RenderSamples
 {
 	abstract class SampleBase: iScene, iKeyboardInput
 	{
+		// Change this to false if you want to compare with D2D. If you'll try to render text will fail with NotImplementedException, but vector graphics does work.
 		static readonly bool preferVrmac2D = true;
 
 		public readonly Context context;
