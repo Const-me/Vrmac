@@ -15,10 +15,20 @@ namespace Vrmac.Draw
 		{
 			data = new SolidColorData( (int)console, eBrushType.Opaque );
 		}
-		public SolidColorBrush(SolidColorData data)
+		public SolidColorBrush( SolidColorData data )
 		{
 			this.data = data;
 		}
 		void IDisposable.Dispose() { }
+
+		public override string ToString()
+		{
+			if( data.paletteIndex <= 16 )
+			{
+				eNamedColor nc = (eNamedColor)(byte)data.paletteIndex;
+				return nc.ToString();
+			}
+			return $"{ data.brushType }: palette index { data.paletteIndex }";
+		}
 	}
 }
