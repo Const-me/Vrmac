@@ -2,14 +2,23 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
 	<metadata>
 		<id>VrmacGraphics</id>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 		<authors>Konstantin, const.me</authors>
 		<owners>Konstantin, const.me</owners>
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<license type="file">EULA.txt</license>
 		<projectUrl>https://github.com/Const-me/Vrmac</projectUrl>
 		<description>Vrmac graphics engine</description>
-		<releaseNotes>Initial public release</releaseNotes>
+
+		<releaseNotes>Two improvements in this release.
+
+1. Removed the majority of MonoGame code, replaced with equivalents from .NET runtime.
+Also removed my 3x2 matrix structure, again replaced with Matrix3x2 from .NET. Size of VrmacInterop.dll reduced by half as the result.
+
+2. Improved filled meshes. Remeshing them with Delaunay-like algorithm. Not precisely Delaunay, can’t afford it performance-wise, but I do use the same formula for flipping these quads. The algorithm is original research.
+Besides remeshing, the transparent portion of meshes now have about twice as few triangles and vertices, help with rendering performance.
+VAA quality of filled meshes improved as well.</releaseNotes>
+
 		<copyright>Copyright © const.me, 2020</copyright>
 		<tags>graphics, gpu, direct3d, direct3d-12, direct2d, linux, opengl-es, raspberry-pi</tags>
 		<repository type="git" url="https://github.com/Const-me/Vrmac.git" />
