@@ -8,6 +8,7 @@
 		<Description>Vrmac graphics engine</Description>
 		<NuspecFile>VrmacGraphics.nuspec</NuspecFile>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -23,6 +24,10 @@
 	  <None Remove="Draw\SwapChain\BlendVS.glsl" />
 	  <None Remove="Draw\SwapChain\BlendVS.hlsl" />
 	  <None Remove="Draw\Utils\Palette\colors.bin" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\VrmacInterop\VersionInfo.cs" Link="VersionInfo.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,5 +94,11 @@
 		<Content Include="linux-arm/libVrmac.so" Pack="true" PackagePath="build/linux-arm/">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="System">
+	    <HintPath>System</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>

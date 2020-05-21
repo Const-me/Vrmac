@@ -8,6 +8,7 @@
 		<PackageProjectUrl>https://github.com/Const-me/Vrmac</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Const-me/Vrmac.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -17,5 +18,10 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <PackageReference Include="ComLightInterop" Version="1.3.7" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="System">
+	    <HintPath>System</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>
