@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable CS1591  // CS1591: Missing XML comment for publicly visible type or member
+// TODO: comment them
+using System;
 
 namespace Vrmac.Draw
 {
