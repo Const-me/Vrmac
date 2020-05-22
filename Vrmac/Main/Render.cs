@@ -81,8 +81,15 @@ namespace Vrmac
 			if( content.scene is iMouseInput mouseInput )
 			{
 				var handler = mouseInput.mouseHandler;
-				var dev = dispatcher.openRawMouse( mouseInput.mouseHandler, mouseInput.getMouseDevice() );
+
+				// Set up clipping of the mouse pointer position, disallowing it to move outside of the screen.
+				CRect mouseClipRect = new CRect( default, content.swapChainSize );
+				var dev = dispatcher.openRawMouse( handler, mouseClipRect, mouseInput.getMouseDevice() );
 				( handler as iInputEventTime )?.sourceInitialized( dev );
+
+				// Default to arrow mouse pointer
+				if( content.mouseCursor == Utils.eCursor.None )
+					content.mouseCursor = Utils.eCursor.Arrow;
 			}
 		}
 
