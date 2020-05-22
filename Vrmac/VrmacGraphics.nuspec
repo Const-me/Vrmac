@@ -10,14 +10,15 @@
 		<projectUrl>https://github.com/Const-me/Vrmac</projectUrl>
 		<description>Vrmac graphics engine</description>
 
-		<releaseNotes>Two improvements in this release.
+		<releaseNotes>1. Removed the majority of MonoGame code, replaced with equivalents from .NET runtime.
+Also removed custom 2D matrix structure, again replaced with Matrix3x2 from .NET. Size of VrmacInterop.dll reduced by half as the result.
 
-1. Removed the majority of MonoGame code, replaced with equivalents from .NET runtime.
-Also removed my 3x2 matrix structure, again replaced with Matrix3x2 from .NET. Size of VrmacInterop.dll reduced by half as the result.
+2. Improved filled meshes. Remeshing them with Delaunay-like algorithm.
+Not precisely Delaunay as I don’t think I can afford the real Delaunay performance-wise, but I use the same formula to test these quads. The algorithm is original research.
+Besides remeshing, the transparent portion of meshes now has about twice as few triangles and vertices, helps with rendering performance.
+VAA quality of filled meshes improved as well.
 
-2. Improved filled meshes. Remeshing them with Delaunay-like algorithm. Not precisely Delaunay, can’t afford it performance-wise, but I do use the same formula for flipping these quads. The algorithm is original research.
-Besides remeshing, the transparent portion of meshes now have about twice as few triangles and vertices, help with rendering performance.
-VAA quality of filled meshes improved as well.</releaseNotes>
+3. Optimized away redundant work when user wants both fill and stroke of the same geometry. This also fixes a subtle rendering bug affecting certain paths with very sharp corners.</releaseNotes>
 
 		<copyright>Copyright © const.me, 2020</copyright>
 		<tags>graphics, gpu, direct3d, direct3d-12, direct2d, linux, opengl-es, raspberry-pi</tags>
@@ -35,14 +36,15 @@ VAA quality of filled meshes improved as well.</releaseNotes>
 		<file src="bin/Release/netcoreapp2.1/VrmacGraphics.xml" target="lib/netcoreapp2.1" />
 		<file src="bin/Release/netcoreapp2.1/VrmacInterop.dll" target="lib/netcoreapp2.1" />
 		<file src="bin/Release/netcoreapp2.1/VrmacInterop.xml" target="lib/netcoreapp2.1" />
-		
-		<!-- Native binaries. They are not in the repository due to different license, but they are avaiulable on the "Releases" page. -->
+
+		<!-- Native binaries. They are not in the repository due to different license, avaiulable on the "Releases" page of the repository. -->
 		<file src="bin/Release/netcoreapp2.1/win10-x64/Vrmac.dll" target="build/win10-x64/" />
 		<file src="bin/Release/netcoreapp2.1/win10-x64/VrmacFT.dll" target="build/win10-x64/" />
 		<file src="bin/Release/netcoreapp2.1/linux-arm/libVrmac.so" target="build/linux-arm/" />
+
 		<!-- Metadata file for consumers of the native DLLs -->
 		<file src="VrmacGraphics.targets" target="build/" />
-		
+
 		<!-- License -->
 		<file src="../EULA.txt" target="" />
 	</files>
