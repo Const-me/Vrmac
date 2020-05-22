@@ -43,7 +43,7 @@ namespace Vrmac.Draw.Main
 			passFlags = eRenderPassFlags.None;
 		}
 
-		protected void fillGeometry( iPathGeometry path, SolidColorData color, int instance = 0 )
+		protected void fillGeometry( iPathGeometry path, SolidColorData color, bool vaa, int instance = 0 )
 		{
 			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			if( !path.testApproximateBounds( ref tform ) || color.brushType == eBrushType.Null )
@@ -52,6 +52,8 @@ namespace Vrmac.Draw.Main
 			eBuildFilledMesh fillOptions = DrawUtilsPrivate.fillFlagsFromColor( color.brushType, false );
 			if( fillOptions == eBuildFilledMesh.None )
 				return; // Null brush
+			if( !vaa )
+				fillOptions &= ~eBuildFilledMesh.VAA;
 
 			sPendingDrawCall pdc = tesselatorThread.fill( path, ref tform, pixel, fillOptions, instance );
 			flushIfNeeded( pdc.drawInfo.drawCallsCount );

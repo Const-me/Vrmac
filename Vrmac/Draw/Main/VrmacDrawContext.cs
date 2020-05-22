@@ -59,7 +59,7 @@ namespace Vrmac.Draw.Main
 			{
 				case SolidColorBrush solidColor:
 					var cd = solidColor.data;
-					fillGeometry( (iPathGeometry)geometry, cd );
+					fillGeometry( (iPathGeometry)geometry, cd, true );
 					return;
 			}
 			throw new NotImplementedException();
@@ -117,7 +117,9 @@ namespace Vrmac.Draw.Main
 			sStrokeStyle ss = strokeStyle?.strokeStyle ?? defaultStrokeStyle();
 			iPathGeometry path = (iPathGeometry)geometry;
 			var palette = device.paletteTexture;
-			fillGeometry( path, fill.data() );
+			// Disabling VAA of filled + stroked meshes for the filled shape. These 2 layers of transparency, one from the mesh below another from the stroke above, aren't doing much good.
+			// This also saves non-trivial count of triangles, as VAA filled meshes have 3-4 times more triangles than non-VAA meshes of the same geometry.
+			fillGeometry( path, fill.data(), false );
 			strokeGeometry( path, stroke.data(), fill.data(), strokeWidth, ref ss, 1 );
 		}
 
