@@ -72,7 +72,7 @@ namespace Vrmac.Draw.Main
 				case SolidColorBrush solidColor:
 					var cd = solidColor.data;
 					sStrokeStyle ss = strokeStyle?.strokeStyle ?? defaultStrokeStyle();
-					strokeGeometry( (iPathGeometry)geometry, cd, width, ref ss );
+					strokeGeometry( (iPathGeometry)geometry, cd, null, width, ref ss );
 					return;
 			}
 			throw new NotImplementedException();
@@ -106,9 +106,6 @@ namespace Vrmac.Draw.Main
 			return transform.current.getScaling();
 		}
 
-		// void iVrmacDrawContext.drawVaaOutline( iGeometry geometry, Vector4 color ) =>
-		// 	drawVaaOutline( (iPathGeometry)geometry, ref color );
-
 		void iDrawContext.drawRectangle( Rect rect, iBrush brush, float width ) =>
 			drawRectangle( ref rect, width, brush.data().paletteIndex );
 
@@ -121,7 +118,7 @@ namespace Vrmac.Draw.Main
 			iPathGeometry path = (iPathGeometry)geometry;
 			var palette = device.paletteTexture;
 			fillGeometry( path, fill.data() );
-			strokeGeometry( path, stroke.data(), strokeWidth, ref ss, 1 );
+			strokeGeometry( path, stroke.data(), fill.data(), strokeWidth, ref ss, 1 );
 		}
 
 		void iDrawContext.drawSprite( Rect rect, int spriteIndex )

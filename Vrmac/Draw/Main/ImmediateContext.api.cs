@@ -61,13 +61,14 @@ namespace Vrmac.Draw.Main
 			calls.add( sDrawCall.solidColorFill( o, ref tform, color.paletteIndex ) );
 		}
 
-		protected void strokeGeometry( iPathGeometry path, SolidColorData color, float width, ref sStrokeStyle strokeStyle, int instance = 0 )
+		protected void strokeGeometry( iPathGeometry path, SolidColorData color, SolidColorData? filledColor, float width, ref sStrokeStyle strokeStyle, int instance = 0 )
 		{
 			getCurrentTransform( out Matrix3x2 tform, out float pixel );
 			if( !path.testApproximateBounds( ref tform, width ) || color.brushType == eBrushType.Null )
 				return;
 
-			StrokeRenderParams srp = StrokeRenderParams.strokedPath( color.paletteIndex, width, pixel );
+			int fillColorIndex = filledColor?.paletteIndex ?? (int)eNamedColor.Transparent;
+			StrokeRenderParams srp = StrokeRenderParams.strokedPath( color.paletteIndex, width, pixel, fillColorIndex );
 			sPendingDrawCall pdc = tesselatorThread.stroke( path, ref tform, pixel, new sStrokeInfo( strokeStyle, srp.meshWidth ), instance );
 			flushIfNeeded( pdc.drawInfo.drawCallsCount );
 
@@ -76,7 +77,7 @@ namespace Vrmac.Draw.Main
 			calls.add( sDrawCall.solidColorStroke( o, ref tform, ref srp ) );
 		}
 
-		protected void fillAndStroke( iPathGeometry path, SolidColorData fillColor, SolidColorData strokeColor, float width, ref sStrokeStyle strokeStyle, int instance = 0 )
+		/* protected void fillAndStroke( iPathGeometry path, SolidColorData fillColor, SolidColorData strokeColor, float width, ref sStrokeStyle strokeStyle, int instance = 0 )
 		{
 			if( fillColor.brushType == eBrushType.Null )
 			{
@@ -102,7 +103,7 @@ namespace Vrmac.Draw.Main
 			Order o = order();
 			drawMeshes.meshes.add( ref pdc );
 			calls.add( sDrawCall.solidColorStroke( o, ref tform, ref srp ) );
-		}
+		} */
 
 		protected void drawRectangle( ref Rect rectangle, float width, int colorIndex )
 		{

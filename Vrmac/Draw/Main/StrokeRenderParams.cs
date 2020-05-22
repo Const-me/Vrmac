@@ -48,9 +48,9 @@ namespace Vrmac.Draw.Main
 			}
 		}
 
-		public static StrokeRenderParams strokedPath( int c, float w, float px )
+		public static StrokeRenderParams strokedPath( int c, float w, float px, int filledColor = (int)eNamedColor.Transparent )
 		{
-			return new StrokeRenderParams( c, (int)eNamedColor.Transparent, w, px, BuiltMeshesCache.strokeMeshesVaa );
+			return new StrokeRenderParams( c, filledColor, w, px, BuiltMeshesCache.strokeMeshesVaa );
 		}
 		public static StrokeRenderParams filledAndStrokedPath( int c, int fc, float w, float px )
 		{
