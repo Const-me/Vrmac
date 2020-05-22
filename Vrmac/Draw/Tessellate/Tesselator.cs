@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Vrmac.Draw.Shaders;
 
@@ -41,12 +42,39 @@ namespace Vrmac.Draw.Tessellate
 			releaseMeshes();
 		}
 
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
+		static sDrawCallInfo filledCallInfo( eBuildFilledMesh fillOptions )
+		{
+			switch( fillOptions & ( eBuildFilledMesh.VAA | eBuildFilledMesh.BrushHasTransparency ) )
+			{
+				case eBuildFilledMesh.None:
+					// Opaque brush without VAA
+					return new sDrawCallInfo( eRenderPassFlags.Opaque, 1 );
+
+				case eBuildFilledMesh.VAA:
+					// VAA emits both opaque and transparent triangles in that mode. It even partitions vertices in the buffer for better GPU cache utilization.
+					return new sDrawCallInfo( eRenderPassFlags.Opaque | eRenderPassFlags.Transparent, 2 );
+
+				case eBuildFilledMesh.BrushHasTransparency:
+				case eBuildFilledMesh.BrushHasTransparency | eBuildFilledMesh.VAA:
+					// When the brush has transparency, VAA or not, the complete mesh will go to the transparent index buffer
+					return new sDrawCallInfo( eRenderPassFlags.Transparent, 1 );
+			}
+			throw new ApplicationException();
+		}
+
 		sPendingDrawCall iTesselator.fill( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, int instance )
 		{
 			var job = postJob( path, instance, ref tform, fillOptions, pixel, null );
 
-			eRenderPassFlags rpf = fillOptions.HasFlag( eBuildFilledMesh.BrushHasTransparency ) ? eRenderPassFlags.Transparent : eRenderPassFlags.Opaque;
-			return new sPendingDrawCall( job, rpf, 1 );
+			return new sPendingDrawCall( job, filledCallInfo( fillOptions ) );
+		}
+
+		sPendingDrawCall iTesselator.stroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, sStrokeInfo stroke, int instance )
+		{
+			var job = postJob( path, instance, ref tform, eBuildFilledMesh.None, pixel, stroke );
+
+			return new sPendingDrawCall( job, eRenderPassFlags.Transparent, 1 );
 		}
 
 		sPendingDrawCall iTesselator.fillAndStroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance )
@@ -58,11 +86,13 @@ namespace Vrmac.Draw.Tessellate
 			return new sPendingDrawCall( job, eRenderPassFlags.Transparent, 1 );
 		}
 
-		sPendingDrawCall iTesselator.stroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, sStrokeInfo stroke, int instance )
+		(sPendingDrawCall, sPendingDrawCall) iTesselator.fillAndStrokeSeparate( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance )
 		{
-			var job = postJob( path, instance, ref tform, eBuildFilledMesh.None, pixel, stroke );
+			var jobs = postJobSeparate( path, instance, ref tform, fillOptions, pixel, stroke );
 
-			return new sPendingDrawCall( job, eRenderPassFlags.Transparent, 1 );
+			var pendingFill = new sPendingDrawCall( jobs.Item1, filledCallInfo( fillOptions ) );
+			var pendingStroke = new sPendingDrawCall( jobs.Item2, eRenderPassFlags.Transparent, 1 );
+			return (pendingFill, pendingStroke);
 		}
 
 		void waitForAllJobs()

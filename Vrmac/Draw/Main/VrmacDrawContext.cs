@@ -116,11 +116,7 @@ namespace Vrmac.Draw.Main
 		{
 			sStrokeStyle ss = strokeStyle?.strokeStyle ?? defaultStrokeStyle();
 			iPathGeometry path = (iPathGeometry)geometry;
-			var palette = device.paletteTexture;
-			// Disabling VAA of filled + stroked meshes for the filled shape. These 2 layers of transparency, one from the mesh below another from the stroke above, aren't doing much good.
-			// This also saves non-trivial count of triangles, as VAA filled meshes have 3-4 times more triangles than non-VAA meshes of the same geometry.
-			fillGeometry( path, fill.data(), false );
-			strokeGeometry( path, stroke.data(), fill.data(), strokeWidth, ref ss, 1 );
+			fillAndStrokeGeometry( path, fill.data(), stroke.data(), strokeWidth, ref ss );
 		}
 
 		void iDrawContext.drawSprite( Rect rect, int spriteIndex )

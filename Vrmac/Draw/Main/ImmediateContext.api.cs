@@ -79,16 +79,19 @@ namespace Vrmac.Draw.Main
 			calls.add( sDrawCall.solidColorStroke( o, ref tform, ref srp ) );
 		}
 
-		/* protected void fillAndStroke( iPathGeometry path, SolidColorData fillColor, SolidColorData strokeColor, float width, ref sStrokeStyle strokeStyle, int instance = 0 )
+		protected void fillAndStrokeGeometry( iPathGeometry path, SolidColorData? fill, SolidColorData stroke, float width, ref sStrokeStyle strokeStyle, int instance = 0 )
 		{
-			if( fillColor.brushType == eBrushType.Null )
+			if( ( fill?.brushType ?? eBrushType.Null ) == eBrushType.Null )
 			{
-				strokeGeometry( path, strokeColor, width, ref strokeStyle, instance );
+				// No fill, just stroke
+				if( stroke.brushType != eBrushType.Null )
+					strokeGeometry( path, stroke, null, width, ref strokeStyle, instance );
 				return;
 			}
-			if( strokeColor.brushType == eBrushType.Null )
+			if( stroke.brushType == eBrushType.Null )
 			{
-				fillGeometry( path, fillColor, instance );
+				// No stroke, just fill
+				fillGeometry( path, fill.Value, true, instance );
 				return;
 			}
 
@@ -96,16 +99,34 @@ namespace Vrmac.Draw.Main
 			if( !path.testApproximateBounds( ref tform, width ) )
 				return;
 
-			eBuildFilledMesh fillOptions = DrawUtilsPrivate.fillFlagsFromColor( fillColor.brushType, true );
+			eBuildFilledMesh fillOptions = DrawUtilsPrivate.fillFlagsFromColor( fill.Value.brushType, true );
+			StrokeRenderParams srp = StrokeRenderParams.strokedPath( stroke.paletteIndex, width, pixel );
+			Order o;
 
-			StrokeRenderParams srp = StrokeRenderParams.strokedPath( strokeColor.paletteIndex, width, pixel );
-			sPendingDrawCall pdc = tesselatorThread.fillAndStroke( path, ref tform, pixel, fillOptions, new sStrokeInfo( strokeStyle, srp.meshWidth ), instance );
-			flushIfNeeded( pdc.drawInfo.drawCallsCount );
+			if( fill.Value == stroke )
+			{
+				// Colors are the same, combine the draw calls
+				sPendingDrawCall pdc = tesselatorThread.fillAndStroke( path, ref tform, pixel, fillOptions, new sStrokeInfo( strokeStyle, srp.meshWidth ), instance );
+				flushIfNeeded( pdc.drawInfo.drawCallsCount );
+				o = order();
+				drawMeshes.meshes.add( ref pdc );
+				calls.add( sDrawCall.solidColorStroke( o, ref tform, ref srp ) );
+				return;
+			}
 
-			Order o = order();
-			drawMeshes.meshes.add( ref pdc );
+			var pendingCalls = tesselatorThread.fillAndStrokeSeparate( path, ref tform, pixel, fillOptions, new sStrokeInfo( strokeStyle, srp.meshWidth ), instance );
+			byte dcc = pendingCalls.Item1.drawInfo.drawCallsCount;
+			dcc += pendingCalls.Item2.drawInfo.drawCallsCount;
+			flushIfNeeded( dcc );
+
+			o = order();
+			drawMeshes.meshes.add( ref pendingCalls.Item1 );
+			calls.add( sDrawCall.solidColorFill( o, ref tform, fill.Value.paletteIndex ) );
+
+			o = order();
+			drawMeshes.meshes.add( ref pendingCalls.Item2 );
 			calls.add( sDrawCall.solidColorStroke( o, ref tform, ref srp ) );
-		} */
+		}
 
 		protected void drawRectangle( ref Rect rectangle, float width, int colorIndex )
 		{

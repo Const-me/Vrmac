@@ -8,14 +8,16 @@ namespace Vrmac.Draw.Tessellate
 		public readonly float precision, pixel;
 		public readonly eBuildFilledMesh fill;
 		public readonly sStrokeInfo stroke;
+		public readonly bool separateStrokeMesh;
 
-		public Options( ref Matrix3x2 transform, float precision, float pixel, eBuildFilledMesh fill, sStrokeInfo? stroke )
+		public Options( ref Matrix3x2 transform, float precision, float pixel, eBuildFilledMesh fill, sStrokeInfo? stroke, bool strokeSeparate )
 		{
 			this.transform = transform;
 			this.precision = precision;
 			this.pixel = pixel;
 			this.fill = fill;
 			this.stroke = stroke ?? default;
+			separateStrokeMesh = strokeSeparate;
 		}
 
 		const float translationThreshold = 1.0f / 16.0f;
@@ -39,6 +41,8 @@ namespace Vrmac.Draw.Tessellate
 				return false;
 			if( that.stroke != stroke )
 				return false;
+			if( that.separateStrokeMesh != separateStrokeMesh )
+				return false;
 			return isSmallEnoughChange( transform, that.transform );
 		}
 
@@ -51,6 +55,8 @@ namespace Vrmac.Draw.Tessellate
 			if( that.stroke != stroke )
 				return false;
 			if( that.transform != transform )
+				return false;
+			if( that.separateStrokeMesh != separateStrokeMesh )
 				return false;
 			return true;
 		}

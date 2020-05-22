@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Vrmac.Draw.Shaders;
 
 namespace Vrmac.Draw
@@ -23,6 +24,7 @@ namespace Vrmac.Draw
 		public readonly eRenderPassFlags renderPassFlags;
 		public readonly byte drawCallsCount;
 
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public sDrawCallInfo( eRenderPassFlags rpf, byte dcc )
 		{
 			renderPassFlags = rpf;
@@ -43,9 +45,17 @@ namespace Vrmac.Draw
 		/// <summary>Initially empty, it only receives data after iTesselator.syncThreads() call.</summary>
 		public readonly iTessellatedMeshes mesh;
 
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public sPendingDrawCall( iTessellatedMeshes mesh, eRenderPassFlags rpf, byte dcc )
 		{
 			drawInfo = new sDrawCallInfo( rpf, dcc );
+			this.mesh = mesh;
+		}
+
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
+		public sPendingDrawCall( iTessellatedMeshes mesh, sDrawCallInfo dci )
+		{
+			drawInfo = dci;
 			this.mesh = mesh;
 		}
 	}
@@ -62,6 +72,8 @@ namespace Vrmac.Draw
 		sPendingDrawCall stroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, sStrokeInfo stroke, int instance = 0 );
 
 		sPendingDrawCall fillAndStroke( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance = 0 );
+
+		(sPendingDrawCall, sPendingDrawCall) fillAndStrokeSeparate( iPathGeometry path, ref Matrix3x2 tform, float pixel, eBuildFilledMesh fillOptions, sStrokeInfo stroke, int instance = 0 );
 
 		void syncThreads();
 

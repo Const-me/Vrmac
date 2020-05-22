@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Threading;
-using Table = System.Runtime.CompilerServices.ConditionalWeakTable<Vrmac.Draw.iPathGeometry, Vrmac.Draw.Tessellate.Meshes>;
-using MultiTable = System.Runtime.CompilerServices.ConditionalWeakTable<Vrmac.Draw.iPathGeometry, System.Collections.Generic.Dictionary<int, Vrmac.Draw.Tessellate.Meshes>>;
+using System.Diagnostics;
 using System.Numerics;
+using System.Threading;
+using MultiTable = System.Runtime.CompilerServices.ConditionalWeakTable<Vrmac.Draw.iPathGeometry, System.Collections.Generic.Dictionary<int, Vrmac.Draw.Tessellate.Meshes>>;
+using Table = System.Runtime.CompilerServices.ConditionalWeakTable<Vrmac.Draw.iPathGeometry, Vrmac.Draw.Tessellate.Meshes>;
 
 namespace Vrmac.Draw.Tessellate
 {
@@ -14,6 +15,8 @@ namespace Vrmac.Draw.Tessellate
 
 		iTessellatedMeshes updateOldJob( Meshes meshes, ref Options options )
 		{
+			Debug.Assert( !options.separateStrokeMesh );
+
 			lock( queues.syncRoot )
 			{
 				Options prevOptions = meshes.options;
@@ -31,6 +34,8 @@ namespace Vrmac.Draw.Tessellate
 
 		iTessellatedMeshes createNewJob( Meshes meshes, ref Options options )
 		{
+			Debug.Assert( !options.separateStrokeMesh );
+
 			meshes.options = options;
 
 			lock( queues.syncRoot )
@@ -52,7 +57,7 @@ namespace Vrmac.Draw.Tessellate
 
 			// We use MD4 to detect changes in re-tessellated polylines. To make that more efficient for small changes of scaling, rounding the precision and pixel values.
 			float precision = pixel.floorBitwise();
-			Options options = new Options( ref tform, precision, pixel, filled, stroke );
+			Options options = new Options( ref tform, precision, pixel, filled, stroke, false );
 
 			Meshes meshes;
 			Table table;
