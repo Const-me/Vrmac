@@ -28,20 +28,6 @@
 	  <None Remove="07-Sprites\3.png" />
 	  <None Remove="07-Sprites\beans.tif.gz" />
 	  <None Remove="07-Sprites\Lenna.jpg" />
-	  <None Remove="linux-arm\libVrmac.so" />
-	  <None Remove="win10-x64\Vrmac.dll" />
-	  <None Remove="win10-x64\VrmacFT.dll" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Content Include="linux-arm\libVrmac.so">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="win10-x64\Vrmac.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="win10-x64\VrmacFT.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Include="02-Cube\cube.psh" />
@@ -61,8 +47,7 @@
 	  <EmbeddedResource Include="07-Sprites\Lenna.jpg" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\VrmacInterop\VrmacInterop.csproj" />
-	  <ProjectReference Include="..\Vrmac\VrmacGraphics.csproj" />
+	  <PackageReference Include="VrmacGraphics" Version="1.2.0" />
 	</ItemGroup>
 
 </Project>
