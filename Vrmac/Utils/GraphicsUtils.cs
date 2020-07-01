@@ -49,6 +49,7 @@ namespace Vrmac
 
 		// Not a memory leak because that particular COM object is statically allocated, AddRef and Release do nothing.
 		static iSimdUtils g_utils;
+		internal static iSimdUtils simdUtils => g_utils;
 
 		internal static void engineCreated( iGraphicsEngine engine )
 		{

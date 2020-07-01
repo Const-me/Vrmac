@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Vrmac.Utils;
@@ -237,8 +238,34 @@ namespace Vrmac.Animation
 				progress.Remove( d );
 			dropList.Clear();
 
-			if( !anyLeft )
+			if( !anyLeft && 0 == m_fakes )
 				RunPolicy.allAnimationsFinished( content );
+		}
+
+		int m_fakes = 0;
+
+		sealed class FakeAnimation: IDisposable
+		{
+			readonly Animations animations;
+
+			public FakeAnimation( Animations owner )
+			{
+				animations = owner;
+				animations.m_fakes++;
+				RunPolicy.animationStarted( owner.content );
+			}
+			void IDisposable.Dispose()
+			{
+				Debug.Assert( animations.m_fakes > 0 );
+				animations.m_fakes--;
+			}
+		}
+
+		/// <summary>Start a fake animation. It doesn’t update anything, but it does prevent the dispatcher from going into environment friendly (render on demand) mode.</summary>
+		/// <remarks>Initially implemented for video playback.</remarks>
+		public IDisposable startFake()
+		{
+			return new FakeAnimation( this );
 		}
 	}
 }

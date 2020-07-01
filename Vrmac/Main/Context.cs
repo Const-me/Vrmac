@@ -44,6 +44,8 @@ namespace Vrmac
 		/// <remarks>For full-screen rendering always eShowWindow.Fullscreen and never changes.</remarks>
 		public eShowWindow windowState { get; private set; } = eShowWindow.Fullscreen;
 
+		internal Rational? displayRefresh { get; private set; } = null;
+
 		/// <summary>Construct the object</summary>
 		/// <param name="scene">The scene to render.</param>
 		/// <param name="flags">Miscellaneous flags</param>
@@ -81,11 +83,12 @@ namespace Vrmac
 		public Dispatcher dispatcher { get; private set; }
 
 		/// <summary>Initialize the object.</summary>
-		public void initialize( iRenderingContext rc )
+		public void initialize( iRenderingContext rc, Rational? displayRefresh )
 		{
 			if( null != renderContext )
 				throw new ApplicationException( "Already initialized" );
 			dispatcher = Dispatcher.currentDispatcher;
+			this.displayRefresh = displayRefresh;
 			if( null == dispatcher )
 				throw new ApplicationException( "Context.initialize requires the current thread to have a dispatcher" );
 
@@ -95,10 +98,7 @@ namespace Vrmac
 			if( rc is iDiligentWindow window )
 				dpiScalingFactor = window.dpiScaling;
 
-			var device = rc.device;
-			// This is required because runtime catches exceptions from async void methods, and redirects them to dispatcher.
-			// Not what we want, therefore this method can't be async.
-			try
+			using( var device = rc.device )
 			{
 				isOpenGlDevice = device.isGlDevice();
 
@@ -110,22 +110,14 @@ namespace Vrmac
 				animation = new Animations( this );
 				scene.createResources( this, device );
 			}
-			catch( Exception )
-			{
-				device.Dispose();
-				throw;
-			}
-			initializeAsync( device );
+			initializeAsync();
 		}
 
-		async void initializeAsync( IRenderDevice device )
+		async void initializeAsync()
 		{
-			using( device )
-			{
-				if( scene is iSceneAsyncInit sai )
-					await sai.createResourcesAsync( this, device );
-				animation.timers.start();
-			}
+			if( scene is iSceneAsyncInit sai )
+				await sai.createResourcesAsync( this );
+			animation.timers.start();
 		}
 
 		ITextureView cachedRtv, cachedDsv;
@@ -309,8 +301,12 @@ namespace Vrmac
 		/// <remarks>Only called in windowed mode. Ain’t called when user minimizes the window.</remarks>
 		public WeakEvent<SwapChainResizedDelegate> swapChainResized { get; } = new WeakEvent<SwapChainResizedDelegate>();
 
-		internal delegate void ReleaseResourcesDelegate( eReleaseResources what );
-		internal WeakEvent<ReleaseResourcesDelegate> releaseResources { get; } = new WeakEvent<ReleaseResourcesDelegate>();
+		/// <summary>Delegate to receive releaseResources event</summary>
+		public delegate void ReleaseResourcesDelegate( eReleaseResources what );
+		/// <summary>Subscribe to this event to release swap chain resources when asked by the OS</summary>
+		/// <remarks>Failing to release everything asked gonna break resizing on Windows, and transitions to/from full screen mode on Windows.
+		/// You gonna need to handle this event if you cache render target textures and/or their render target views.</remarks>
+		public WeakEvent<ReleaseResourcesDelegate> releaseResources { get; } = new WeakEvent<ReleaseResourcesDelegate>();
 
 		WeakEvent<Action<double>> m_dpiChanged = null;
 		/// <summary>Subscribe to this event to get notified when DPI multiplier changes</summary>
@@ -390,6 +386,22 @@ namespace Vrmac
 		internal void setMouseCursorPosition( CPoint position )
 		{
 			createCursor().position = position;
+		}
+
+		/// <summary>Create media engine object to play videos</summary>
+		public MediaEngine.iMediaEngine createMediaEngine( TextureFormat destTextureFormat = TextureFormat.Unknown )
+		{
+			var eng = Render.graphicsEngine;
+			if( null == eng )
+				throw new ApplicationException( "Rendering was not initialized" );
+
+			if( destTextureFormat == TextureFormat.Unknown )
+				destTextureFormat = swapChainFormats.color;
+
+			if( RuntimeEnvironment.runningWindows )
+				return eng.createMediaEngine( device, destTextureFormat );
+			else
+				return new MediaEngine.Engine( this, destTextureFormat );
 		}
 	}
 }

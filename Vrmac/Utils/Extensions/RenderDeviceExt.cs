@@ -41,7 +41,7 @@ namespace Diligent.Graphics
 		{
 			int cb = Marshal.SizeOf<T>();
 			if( 0 != cb % 16 )
-				throw new ArgumentException();
+				throw new ArgumentException( $"Constant buffer size must be a multiple of 16 bytes, yet sizeof( { typeof( T ).FullName } ) = { cb }" );
 			BufferDesc desc = new BufferDesc( false )
 			{
 				uiSizeInBytes = cb,

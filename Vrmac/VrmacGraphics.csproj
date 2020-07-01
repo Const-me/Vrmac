@@ -24,10 +24,16 @@
 	  <None Remove="Draw\SwapChain\BlendVS.glsl" />
 	  <None Remove="Draw\SwapChain\BlendVS.hlsl" />
 	  <None Remove="Draw\Utils\Palette\colors.bin" />
+	  <None Remove="MediaEngine\Nv12PS.glsl" />
+	  <None Remove="MediaEngine\Render\VideoPS.glsl" />
+	  <None Remove="MediaEngine\Render\VideoPS.hlsl" />
+	  <None Remove="MediaEngine\Render\VideoVS.hlsl" />
+	  <None Remove="MediaEngine\VideoVS.hlsl" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Include="..\VrmacInterop\VersionInfo.cs" Link="VersionInfo.cs" />
+	  <EmbeddedResource Include="MediaEngine\Nv12PS.glsl" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -42,6 +48,10 @@
 		<EmbeddedResource Include="Input\Linux\usb-devices.bin" />
 		<EmbeddedResource Include="Input\Linux\usb-vendors.gz" />
 		<EmbeddedResource Include="Input\X11\KeySym.gz" />
+		<EmbeddedResource Include="MediaEngine\Render\VideoPS.glsl" />
+		<EmbeddedResource Include="MediaEngine\Render\VideoPS.hlsl" />
+		<EmbeddedResource Include="MediaEngine\Render\VideoVS.hlsl" />
+		<EmbeddedResource Include="MediaEngine\VideoVS.hlsl" />
 		<EmbeddedResource Include="Utils\Cursor\Render\AniCursorPS.hlsl" />
 		<EmbeddedResource Include="Utils\Cursor\Render\AniCursorVS.hlsl" />
 		<EmbeddedResource Include="Utils\Cursor\Assets\arrow.gz" />
@@ -63,12 +73,24 @@
 	  <ProjectReference Include="..\VrmacInterop\VrmacInterop.csproj">
 	    <Private>true</Private>
 	  </ProjectReference>
+	  <ProjectReference Include="..\VrmacVideo\VrmacVideo.csproj">
+	    <Private>true</Private>
+	  </ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Update="Draw\Utils\IntMatrixT4.tt">
 	    <Generator>TextTemplatingFileGenerator</Generator>
 	    <LastGenOutput>IntMatrixT4.cs</LastGenOutput>
+	  </None>
+	  <None Update="MediaEngine\VideoPS.hlsl">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>VideoPS.tt</DependentUpon>
+	  </None>
+	  <None Update="MediaEngine\VideoPS.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>VideoPS.hlsl</LastGenOutput>
 	  </None>
 	</ItemGroup>
 

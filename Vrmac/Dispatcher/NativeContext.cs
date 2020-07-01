@@ -117,5 +117,20 @@ namespace Vrmac.Utils
 				ce.Throw();
 			}
 		}
+
+		internal static Exception tryGetCachedException( int hresult )
+		{
+			NativeContext nc = Dispatcher.currentDispatcher?.synchronizationContext as NativeContext;
+			if( null == nc?.cachedException )
+				return null;
+
+			if( nc.cachedException.SourceException.HResult == hresult )
+			{
+				var ce = nc.cachedException;
+				nc.cachedException = null;
+				return ce.SourceException;
+			}
+			return null;
+		}
 	}
 }

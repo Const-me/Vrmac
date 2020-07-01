@@ -1,4 +1,5 @@
 ﻿using ComLight;
+using Diligent.Graphics;
 using System;
 using Vrmac.Input;
 using Vrmac.Input.Linux;
@@ -58,7 +59,7 @@ namespace Vrmac
 			using( var dispatcher = engine.dispatcher() )
 			using( var window = dispatcher.nativeDispatcher.createWindow( content, windowSetup, deviceType ) )
 			{
-				content.initialize( window );
+				content.initialize( window, null );
 				// Wire up the input
 				setupWindowedInput( window, content );
 				// Set the title
@@ -124,7 +125,7 @@ namespace Vrmac
 
 					using( var renderContext = engine.createFullScreenContext( content, modesetContext ) )
 					{
-						content.initialize( renderContext );
+						content.initialize( renderContext, mode.refreshRate );
 						setupRawInput( dispatcher, content );
 
 						// Console.WriteLine( "Initialized rendering" );
@@ -144,12 +145,12 @@ namespace Vrmac
 		public static iGraphicsEngine graphicsEngine =>
 			currentEngine.TryGetTarget( out var res ) ? res : null;
 
-		internal static Direct2D.iDrawDevice createDirect2dDevice( Context content )
+		internal static Direct2D.iDrawDevice createDirect2dDevice( Context content, ResourceState textureInState = ResourceState.RenderTarget, ResourceState textureOutState = ResourceState.Present )
 		{
 			if( content.renderContext is iDiligentWindow window && RuntimeEnvironment.operatingSystem == eOperatingSystem.Windows )
 			{
 				using( var df = graphicsEngine.createDrawFactory() )
-					return df.createD2dDevice( window );
+					return df.createD2dDevice( window, textureInState, textureOutState );
 			}
 			throw new NotSupportedException( "Direct2D is Windows only" );
 		}

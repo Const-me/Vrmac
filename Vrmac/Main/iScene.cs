@@ -18,6 +18,6 @@ namespace Vrmac
 	{
 		/// <summary>Optional asynchronous initialization. The library will start calling iScene.render before this method is complete.</summary>
 		/// <remarks>Animation timers only start running after this method completes successfully.</remarks>
-		Task createResourcesAsync( Context context, IRenderDevice device );
+		Task createResourcesAsync( Context context );
 	}
 }
