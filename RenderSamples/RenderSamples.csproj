@@ -55,7 +55,8 @@
 	  <EmbeddedResource Include="07-Sprites\Lenna.jpg" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="VrmacGraphics" Version="1.1.0" />
+	  <ProjectReference Include="..\VrmacInterop\VrmacInterop.csproj" />
+	  <ProjectReference Include="..\Vrmac\VrmacGraphics.csproj" />
 	</ItemGroup>
 
 </Project>
