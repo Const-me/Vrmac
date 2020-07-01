@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Vrmac.Draw;
 
 namespace Vrmac.Utils
@@ -25,6 +26,33 @@ namespace Vrmac.Utils
 					utils.offsetGlyphs( ref dest.GetPinnableReference(), sourcePtr, count, offsetValue );
 				}
 			}
+		}
+
+		/// <summary>Multiply signed int16 numbers by a specified constant</summary>
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
+		public static void applyPcmVolume( this iSimdUtils utils, Span<short> span, byte volume )
+		{
+			if( volume == 0xFF )
+				return;
+			unsafe
+			{
+				fixed ( short* ptr = span )
+					utils.applyPcmVolume( ptr, span.Length, volume );
+			}
+		}
+
+		/// <summary>Get a function pointer to compute interleaved 16-bit PCM samples from the output of DTS audio decoder</summary>
+		public static pfnInterleaveFunc interleaveDts( this iSimdUtils utils, byte channelsCount )
+		{
+			utils.interleaveDts( out var pfn, channelsCount );
+			return Marshal.GetDelegateForFunctionPointer<pfnInterleaveFunc>( pfn );
+		}
+
+		/// <summary>Get a function pointer to compute interleaved 16-bit PCM samples from the output of Dolby AC3 decoder</summary>
+		public static pfnInterleaveFunc interleaveDolby( this iSimdUtils utils, byte channelsCount )
+		{
+			utils.interleaveDolby( out var pfn, channelsCount );
+			return Marshal.GetDelegateForFunctionPointer<pfnInterleaveFunc>( pfn );
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using ComLight;
+using Diligent.Graphics;
 using Vrmac.Draw;
 
 namespace Vrmac
@@ -35,5 +36,9 @@ namespace Vrmac
 		void getSimdUtils( out Utils.iSimdUtils result );
 		/// <summary>Utility object with a couple manually optimized SIMD routines</summary>
 		Utils.iSimdUtils simdUtils { get; }
+
+		/// <summary>Create a media engine.</summary>
+		/// <remarks>Only works on Windows</remarks>
+		[RetValIndex] MediaEngine.iMediaEngine createMediaEngine( IRenderDevice device, TextureFormat outputFormat );
 	}
 }

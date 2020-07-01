@@ -1,11 +1,12 @@
 ﻿// TODO: comment them
 #pragma warning disable CS1591  // CS1591: Missing XML comment for publicly visible type or member
+using System;
 using System.Runtime.InteropServices;
 using Vrmac;
 
 /// <summary>Integer rectangle</summary>
 [StructLayout( LayoutKind.Sequential )]
-public struct CRect
+public struct CRect: IEquatable<CRect>
 {
 	public int left, top, right, bottom;
 
@@ -32,11 +33,32 @@ public struct CRect
 	public bool isEmpty => right <= left || bottom <= top;
 
 	/// <summary>Returns a string that represents the current object.</summary>
-	public override string ToString()
+	public override string ToString() =>
+		$"{ topLeft } - { bottomRight }, size { size }";
+
+	public bool Equals( CRect that )
 	{
-		return $"{ topLeft } - { bottomRight }, size { size }";
+		return left == that.left && top == that.top && right == that.right && bottom == that.bottom;
+	}
+
+	public override bool Equals( object obj )
+	{
+		if( obj is CRect rc )
+			return Equals( rc );
+		return false;
+	}
+
+	public override int GetHashCode() => HashCode.Combine( typeof( CRect ), left, top, right, bottom );
+
+	public static bool operator ==( CRect a, CRect b )
+	{
+		return a.Equals( b );
+	}
+	public static bool operator !=( CRect a, CRect b )
+	{
+		return !a.Equals( b );
 	}
 
 	/// <summary>An empty rectangle at [ 0, 0 ]</summary>
-	public static CRect empty => new CRect( 0, 0, 0, 0 );
+	public static CRect empty => default;
 }

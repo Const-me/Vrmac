@@ -1,6 +1,6 @@
-﻿using Diligent.Graphics;
-using System;
+﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Vrmac.Draw;
 
 namespace Diligent
@@ -9,6 +9,7 @@ namespace Diligent
 	public static class Unsafe
 	{
 		/// <summary>Create a span to read or write native memory</summary>
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static Span<T> writeSpan<T>( IntPtr pointer, int count ) where T : unmanaged
 		{
 			unsafe
@@ -19,6 +20,7 @@ namespace Diligent
 		}
 
 		/// <summary>Create span to read native memory</summary>
+		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static ReadOnlySpan<T> readSpan<T>( IntPtr pointer, int count ) where T : unmanaged
 		{
 			unsafe

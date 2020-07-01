@@ -20,6 +20,8 @@ namespace Vrmac
 		new void getSwapChain( out ISwapChain swapChain );
 		/// <summary>Render and present a frame.</summary>
 		new bool renderFrame();
+		/// <summary>Wait for next vertical blank event</summary>
+		new void waitForVBlank();
 
 		/// <summary>Create an object to setup input handling</summary>
 		void getInput( out iInput i );

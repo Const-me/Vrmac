@@ -24,5 +24,8 @@ namespace Vrmac
 		/// <remarks>Only called if you're using windowed rendering.
 		/// If you'll change nothing, the window will be shown at some reasonable default position, restored.</remarks>
 		void adjustInitialPosition( [In] ref CRect displayRectangle, [In, Out] ref sWindowInitialPosition swp );
+
+		/// <summary>Return true if you want video support on Windows</summary>
+		bool needsVideoSupport();
 	}
 }

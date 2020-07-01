@@ -26,5 +26,8 @@ namespace Vrmac
 		/// <summary>Render and present a frame.</summary>
 		/// <remarks>If you have a window subsystem and use <see cref="iDispatcher" />, you don't ever need to call this, instead pass the context to <see cref="iDispatcher.run(iRenderingContext[], int)" /></remarks>
 		bool renderFrame();
+
+		/// <summary>Wait for next vertical blank event</summary>
+		void waitForVBlank();
 	}
 }

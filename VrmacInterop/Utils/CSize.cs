@@ -19,10 +19,7 @@ namespace Vrmac
 		}
 
 		/// <summary>Returns a string that represents the current object.</summary>
-		public override string ToString()
-		{
-			return $"[ { cx } × { cy } ]";
-		}
+		public override string ToString() => $"[ { cx } × { cy } ]";
 
 		public override int GetHashCode()
 		{

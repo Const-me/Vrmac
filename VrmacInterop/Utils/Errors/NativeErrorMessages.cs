@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace Vrmac.Utils
 {
 	/// <summary>Utility class to convert errors logged by C++ code into exception messages.</summary>
-	/// <remarks>The public static methods are called from the proxy classes ComLight generates in runtime.</remarks>
+	/// <remarks>Some of the public static methods are called from the proxy classes ComLight generates in runtime, because [CustomConventions( typeof( NativeErrorMessages ) )].</remarks>
 	public static class NativeErrorMessages
 	{
 		[ThreadStatic]
@@ -48,10 +48,14 @@ namespace Vrmac.Utils
 
 		// See FACILITY_XCB constant in errorHandling.hpp
 		const int xcbErrorCode = unchecked((int)0xA0020000);
+		// See FACILITY_WINDOWS_MEDIA constant in errorHandling.hpp
+		const int windowsMediaErrorCode = unchecked((int)0xA0030000);
 
-		const int facilityMask = unchecked((int)0xFFFF0000);
+		/// <summary>Bit mask to extract higher 16 bits of HRESULT, with facility, severity, and user bit</summary>
+		public const int facilityMask = unchecked((int)0xFFFF0000);
 
-		internal static string customErrorMessage( int hr )
+		/// <summary>Error message from HRESULT code</summary>
+		public static string customErrorMessage( int hr )
 		{
 			int mask = hr & facilityMask;
 			int code = hr & 0xFFFF;
@@ -69,6 +73,11 @@ namespace Vrmac.Utils
 					if( null != message )
 						return $"XCB error code { code }, { message }";
 					return $"Undocumented XCB error code { code }";
+				case windowsMediaErrorCode:
+					message = WindowsMediaErrors.tryLookup( code );
+					if( null != message )
+						return $"Windows media error code { code }: { message }";
+					return $"Undocumented Windows media error code { code }";
 			}
 			return null;
 		}
@@ -99,6 +108,12 @@ namespace Vrmac.Utils
 			}
 
 			ComLight.ErrorCodes.throwForHR( hr );
+		}
+
+		/// <summary>Human-readable message in English, from Linux errno result code</summary>
+		public static string lookupLinuxError( int code )
+		{
+			return LinuxErrors.tryLookup( code );
 		}
 	}
 }
