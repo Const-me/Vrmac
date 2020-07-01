@@ -1,0 +1,12 @@
+﻿0x00 None Forbidden
+0x01 ObjectDescriptor ObjectDescriptorStream, to dynamically update object descriptors or their components
+0x02 ClockReference ClockReferenceStream, for the sole purpose of conveying clock reference time stamps
+0x03 Scene SceneDescriptionStream, MPEG-4 Part 11 “Scene description and application engine”
+0x04 Video VisualStream
+0x05 Audio AudioStream
+0x06 MPEG7 MPEG7Stream, Multimedia content description
+0x07 IPMP IPMPStream, Intellectual Property Management and Protection
+0x08 ObjectContentInfo ObjectContentInfoStream; OCI stream is an elementary stream that conveys time-varying object content information, termed OCI events.
+0x09 MPEGJ MPEGJStream, some embedded Java stuff from 2005
+0x0A Interaction Interaction Stream
+0x0B IPMPTool IPMPToolStream, Intellectual Property Management and Protection

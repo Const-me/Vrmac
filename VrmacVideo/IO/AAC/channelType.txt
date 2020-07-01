@@ -1,0 +1,7 @@
+﻿0 None None
+1 Front Front speaker position at normal height
+2 Size Side speaker position at normal height
+3 Back Back speaker position at normal height
+4 Sub Low frequency effect speaker position (front)
+0x10 Top Top speaker area flag, for combination with speaker positions
+0x20 Bottom Bottom speaker area flag, for combination with speaker positions

@@ -1,0 +1,46 @@
+﻿0 TRAIL_N Coded slice segment of a non-TSA, non-STSA trailing picture
+1 TRAIL_R Coded slice segment of a non-TSA, non-STSA trailing picture
+
+2 TSA_N Coded slice segment of a TSA picture
+3 TSA_R Coded slice segment of a TSA picture
+
+4 STSA_N Coded slice segment of an STSA picture
+5 STSA_R Coded slice segment of an STSA picture
+
+6 RADL_N Coded slice segment of a RADL picture
+7 RADL_R Coded slice segment of a RADL picture
+
+8 RASL_N Coded slice segment of a RASL picture
+9 RASL_R Coded slice segment of a RASL picture
+
+10 RSV_VCL_N10 Reserved non-IRAP SLNR VCL NAL unit type
+12 RSV_VCL_N12 Reserved non-IRAP SLNR VCL NAL unit type
+14 RSV_VCL_N14 Reserved non-IRAP SLNR VCL NAL unit type
+
+11 RSV_VCL_R11 Reserved non-IRAP sub-layer reference VCL NAL unit type 
+13 RSV_VCL_R13 Reserved non-IRAP sub-layer reference VCL NAL unit type
+15 RSV_VCL_R15 Reserved non-IRAP sub-layer reference VCL NAL unit type
+
+16 BLA_W_LP Coded slice segment of a BLA picture
+17 BLA_W_RADL Coded slice segment of a BLA picture
+18 BLA_N_LP Coded slice segment of a BLA picture
+
+19 IDR_W_RADL Coded slice segment of an IDR picture
+20 IDR_N_LP Coded slice segment of an IDR picture
+
+21 CRA_NUT Coded slice segment of a CRA picture
+
+22 RSV_IRAP_VCL22 Reserved IRAP VCL NAL unit type
+23 RSV_IRAP_VCL23 Reserved IRAP VCL NAL unit type
+
+32 VPS Video parameter set
+33 SPS Sequence parameter set
+
+34 PPS Picture parameter set
+35 AUD Access unit delimiter
+36 EOS End of sequence
+37 EOB End of bitstream
+38 FD Filler data
+
+39 PREFIX_SEI_NUT Supplemental enhancement information
+40 SUFFIX_SEI_NUT Supplemental enhancement information

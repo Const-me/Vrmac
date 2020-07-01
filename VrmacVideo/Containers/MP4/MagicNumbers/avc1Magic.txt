@@ -1,0 +1,5 @@
+﻿avcC AVCConfigurationBox
+avc1 AVCSampleEntry
+avc2 AVC2SampleEntry
+btrt MPEG4BitRateBox
+m4ds MPEG4ExtensionDescriptorsBox

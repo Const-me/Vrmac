@@ -1,0 +1,10 @@
+﻿0 P Predicted picture
+1 B Bidirectional predicted picture
+2 I Intra-coded picture
+3 SP Switching P slice
+4 SI Switching I slice
+5 PF Predicted picture, fixed slice type
+6 BF Bidirectional predicted picture, fixed slice type
+7 IF Intra-coded picture, fixed slice type
+8 SPF Switching P slice, fixed slice type
+9 SIF Switching I slice, fixed slice type

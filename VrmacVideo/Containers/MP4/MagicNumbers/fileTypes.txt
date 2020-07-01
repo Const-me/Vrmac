@@ -1,0 +1,3 @@
+﻿isom MP4 Base Media v1 [IS0 14496-12:2003]
+iso2 MP4 Base Media v2 [ISO 14496-12:2005]
+avc1 MP4 Base with AVC extension [ISO 14496-12:2005]

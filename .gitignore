@@ -14,3 +14,5 @@ Vrmac/win10-x64/Vrmac.dll
 RenderSamples/win10-x64/Vrmac.dll
 RenderSamples/win10-x64/VrmacFT.dll
 RenderSamples/linux-arm/libVrmac.so
+VrmacVideo/bin/
+VrmacVideo/obj/

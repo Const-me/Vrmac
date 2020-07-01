@@ -1,0 +1,13 @@
+﻿0 None Unspecified
+1 NonIDR Coded slice of a non-IDR picture
+2 PartitionA Coded slice data partition A
+3 PartitionB Coded slice data partition B
+4 PartitionC Coded slice data partition C
+5 IDR Coded slice of an IDR picture
+6 SEI Supplemental enhancement information
+7 SPS Sequence parameter set
+8 PPS Picture parameter set
+9 Delimiter Access unit delimiter
+10 SequenceEnd End of sequence
+11 StreamEnd End of stream
+12 Filler Filler data

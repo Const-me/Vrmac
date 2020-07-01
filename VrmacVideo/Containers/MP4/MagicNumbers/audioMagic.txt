@@ -1,0 +1,3 @@
+﻿mp4a MPEG-4 Audio
+esds MPEG-4 Elementary Stream Descriptor
+ac-3 Dolby Digital, also known as Dolby AC-3

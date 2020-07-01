@@ -1,0 +1,7 @@
+﻿1 BT709 ITU-R Recommendation BT.709
+2 Unspecified Image characteristics are unknown or as determined by the application
+4 BT470M ITU-R Recommendation BT.470-2 System M
+5 BT470BG ITU-R Recommendation BT.470-2 System B, G
+6 SMPTE170 Society of Motion Picture and Television Engineers 170M
+7 SMPTE240 Society of Motion Picture and Television Engineers 240M (1987)
+8 Film Generic film, color filters using Illuminant C

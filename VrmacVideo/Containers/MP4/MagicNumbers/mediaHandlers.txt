@@ -1,0 +1,8 @@
+﻿vide Video track
+auxv Auxiliary video track
+soun Audio track
+meta Timed metadata
+hint Hint
+text Text
+subt Subtitle track
+fdsm Font

@@ -1,0 +1,8 @@
+﻿-1 Unknown Unknown format
+0 Raw "as is" access units (packet based since there is obviously no sync layer)
+1 ADIF ADIF bitstream format
+2 ADTS ADTS bitstream format
+6 LATM_MCP1 Low Overhead Audio Transport Multiplex; Audio Mux Elements with muxConfigPresent = 1
+7 LATM_MCP0 Low Overhead Audio Transport Multiplex; Audio Mux Elements with muxConfigPresent = 0, out of band StreamMuxConfig
+10 LOAS Self-synchronizing format called Low Overhead Audio Stream
+12 DRM Digital Radio Mondiale (DRM30/DRM+) bitstream format

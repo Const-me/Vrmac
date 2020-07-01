@@ -1,0 +1,44 @@
+﻿0x00 None Forbidden
+0x01 Object ObjectDescrTag
+0x02 InitialObject InitialObjectDescrTag
+0x03 ElementaryStream ES_DescrTag
+0x04 DecoderConfiguration DecoderConfigDescrTag
+0x05 DecoderSpecificInfo DecSpecificInfoTag
+0x06 SyncLayerConfiguration SLConfigDescrTag
+0x07 ContentIdentification ContentIdentDescrTag
+0x08 SupplementaryContentIdentification SupplContentIdentDescrTag
+0x09 IPIdentificationPointer IPI_DescrPointerTag
+0x0A IPMPPointer IPMP_DescrPointerTag, Intellectual Property Management and Protection
+0x0B IPMP IPMP_DescrTag, Intellectual Property Management and Protection
+0x0C QoS QoS_DescrTag, Quality of Service
+0x0D Registration RegistrationDescrTag
+0x0E ElementaryStreamIdInc ES_ID_IncTag
+0x0F ElementaryStreamIdRef ES_ID_RefTag
+0x10 Mp4InitialObjectDescriptor MP4_IOD_Tag
+0x11 Mp4ObjectDescriptor MP4_OD_Tag
+0x12 IPL_DescrPointerRef IPL_DescrPointerRefTag, no idea what’s IPL
+0x13 ExtensionProfileLevel ExtensionProfileLevelDescrTag
+0x14 ProfileLevelIndicationIndex profileLevelIndicationIndexDescrTag
+0x40 ContentClassification ContentClassificationDescrTag
+0x41 KeyWord KeyWordDescrTag
+0x42 Rating RatingDescrTag
+0x43 Language LanguageDescrTag
+0x44 ShortTextual ShortTextualDescrTag
+0x45 ExpandedTextual ExpandedTextualDescrTag
+0x46 ContentCreatorName ContentCreatorNameDescrTag
+0x47 ContentCreationDate ContentCreationDateDescrTag
+0x48 ContentInformationAuthor OCICreatorNameDescrTag
+0x49 ContentInformationDate OCICreationDateDescrTag
+0x4A SmpteCameraPosition SmpteCameraPositionDescrTag, Society of Motion Picture and Television Engineers, probably only relevant for media production
+0x4B Segment SegmentDescrTag
+0x4C MediaTime MediaTimeDescrTag
+0x60 IPMP_ToolsList IPMP_ToolsListDescrTag, Intellectual Property Management and Protection
+0x61 IPMP_Tool IPMP_ToolTag, Intellectual Property Management and Protection
+0x62 M4MuxTiming M4MuxTimingDescrTag
+0x63 M4MuxCodeTable M4MuxCodeTableDescrTag
+0x64 ExtSLConfig ExtSLConfigDescrTag
+0x65 M4MuxBufferSize M4MuxBufferSizeDescrTag
+0x66 M4MuxIdent M4MuxIdentDescrTag
+0x67 DependencyPointer DependencyPointerTag
+0x68 DependencyMarker DependencyMarkerTag
+0x69 M4MuxChannel M4MuxChannelDescrTag

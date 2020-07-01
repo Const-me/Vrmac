@@ -1,0 +1,27 @@
+﻿0x00 Empty Forbidden
+0x01 Mpeg4ScenesV1 Systems ISO/IEC 14496-1, BIFSConfig specified in ISO/IEC 14496-11
+0x02 Mpeg4ScenesV2 Systems ISO/IEC 14496-1, BIFSv2Config specified in ISO/IEC 14496-11.
+0x03 Interaction Interaction Stream
+0x04 Mpeg4ScenesExtended Systems ISO/IEC 14496-1 Extended BIFS Configuration
+0x05 AFX Systems ISO/IEC 14496-1 AFX; AFX (Animation Framework eXtension) is a set of tools for efficiently coding the shape, texture and animation of interactive synthetic 3D objects. 
+0x06 Font Font Data Stream
+0x07 SynthesizedTexture Synthesized Texture Stream
+0x08 StreamingText Streaming Text Stream
+0x20 Mpeg4Video Visual ISO/IEC 14496-2
+0x21 h264 Visual ITU-T Recommendation H.264 | ISO/IEC 14496-10
+0x22 h264ParameterSets Parameter Sets for ITU-T Recommendation H.264 | ISO/IEC 14496-10
+0x40 Mpeg4Audio Audio ISO/IEC 14496-3
+0x60 h262Simple Visual ISO/IEC 13818-2 Simple Profile
+0x61 h262Main Visual ISO/IEC 13818-2 Main Profile
+0x62 h262SNR Visual ISO/IEC 13818-2 SNR Profile, Signal-to-Noise Ratio (SNR) scalable
+0x63 h262Spatial Visual ISO/IEC 13818-2 Spatial Profile
+0x64 h262High Visual ISO/IEC 13818-2 High Profile
+0x65 h262_422 Visual ISO/IEC 13818-2 422 Profile
+0x66 Aac Audio ISO/IEC 13818-7 Main Profile
+0x67 AacLC Audio ISO/IEC 13818-7 LowComplexity Profile
+0x68 AacSSR Audio ISO/IEC 13818-7 Scaleable Sampling Rate Profile
+0x69 Mpeg2Audio Audio ISO/IEC 13818-3
+0x6A Mpeg1Video Visual ISO/IEC 11172-2
+0x6B MP3 Audio ISO/IEC 11172-3
+0x6C JPEG Visual ISO/IEC 10918-1
+0xFF None No object type specified

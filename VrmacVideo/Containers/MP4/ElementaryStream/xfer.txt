@@ -1,0 +1,9 @@
+﻿1 BT709 ITU-R Recommendation BT.709
+2 Unspecified Image characteristics are unknown or are determined by the application
+4 BT470M ITU-R Recommendation BT.470-2 System M
+5 BT470BG ITU-R Recommendation BT.470-2 System B, G
+6 SMPTE170 Society of Motion Picture and Television Engineers 170M
+7 SMPTE240 Society of Motion Picture and Television Engineers 240M (1987)
+8 Linear Linear transfer characteristics
+9 Log100 Logarithmic transfer characteristic, 100:1 range
+10 Log316 Logarithmic transfer characteristic, 316.22777:1 range

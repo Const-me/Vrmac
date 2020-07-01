@@ -1,0 +1,114 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="libDtsDecoder.so" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="linux-arm\libDtsDecoder.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Containers\HEVC\scanOrder.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>scanOrder.tt</DependentUpon>
+    </None>
+    <None Include="Linux\Temp\sizeofs.cpp">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>sizeofs.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VrmacInterop\VrmacInterop.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Containers\HEVC\hevcEnums.cs">
+      <DependentUpon>hevcEnums.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Containers\HEVC\scanOrder.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>scanOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Containers\MP4\MagicNumbers\magicNumbers.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>magicNumbers.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Containers\MP4\ElementaryStream\mpegEnums.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>mpegEnums.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Containers\MP4\Structures\Languages.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Languages.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IO\AAC\Enums.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Enums.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Containers\HEVC\hevcEnums.tt">
+      <LastGenOutput>hevcEnums.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Containers\HEVC\scanOrder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>scanOrder.cs</LastGenOutput>
+    </None>
+    <None Update="Containers\MP4\MagicNumbers\magicNumbers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>magicNumbers.cs</LastGenOutput>
+    </None>
+    <None Update="Containers\MP4\Structures\Languages.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Languages.cs</LastGenOutput>
+    </None>
+    <None Update="Containers\MP4\ElementaryStream\mpegEnums.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>mpegEnums.cs</LastGenOutput>
+    </None>
+    <None Update="IO\AAC\Enums.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Enums.cs</LastGenOutput>
+    </None>
+    <None Update="Linux\Temp\sizeofs.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>sizeofs.cpp</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
