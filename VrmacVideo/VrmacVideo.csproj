@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="libDtsDecoder.so" />
+    <None Remove="linux-arm\libDtsDecoder.so" />
   </ItemGroup>
 
   <ItemGroup>
