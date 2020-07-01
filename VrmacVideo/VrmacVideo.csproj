@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\VrmacInterop\VersionInfo.cs" Link="VersionInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="linux-arm\libDtsDecoder.so">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
