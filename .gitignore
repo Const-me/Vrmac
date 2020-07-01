@@ -16,3 +16,4 @@ RenderSamples/win10-x64/VrmacFT.dll
 RenderSamples/linux-arm/libVrmac.so
 VrmacVideo/bin/
 VrmacVideo/obj/
+VrmacVideo/linux-arm/libDtsDecoder.so
