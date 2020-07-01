@@ -61,7 +61,7 @@ namespace RenderSamples.Utils
 			}
 
 			if( context.scene is iKeyPressedHandler hh )
-				hh.keyPressed( key );
+				hh.keyPressed( key, ks );
 		}
 
 		void switchToTrueFullScreen( iDiligentWindow window )

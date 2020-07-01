@@ -21,9 +21,10 @@ namespace RenderSamples
 			// sample = new Tutorial03_Texturing();
 			// sample = new SpinningTeapot();
 			// sample = new ShapesSample();
-			sample = new TigerSvgSample();
+			// sample = new TigerSvgSample();
 			// sample = new SpritesSample();
 			// sample = new TextSample();
+			sample = new VideoPlayerSample( args );
 
 			SampleRenderer.runSample( sample );
 		}

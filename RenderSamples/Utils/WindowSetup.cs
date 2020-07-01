@@ -26,5 +26,7 @@ namespace RenderSamples.Utils
 				string.Join( ";\n\t", screens ) );
 			return -1;
 		}
+
+		bool iWindowSetup.needsVideoSupport() => true;
 	}
 }

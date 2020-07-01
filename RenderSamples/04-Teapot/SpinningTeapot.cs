@@ -31,9 +31,10 @@ namespace RenderSamples
 			mouseHandler.subscribe( this );
 		}
 
-		async Task iSceneAsyncInit.createResourcesAsync( Context context, IRenderDevice device )
+		async Task iSceneAsyncInit.createResourcesAsync( Context context )
 		{
-			await resources.createAsync( device );
+			using( var device = context.device )
+				await resources.createAsync( device );
 			motion = new TeapotMotion( context, mouseHandler );
 			teapotWorld = resources.meshBoundingBox.transformToUnitCube();
 			mouseHandler.subscribe( motion );
@@ -76,7 +77,7 @@ namespace RenderSamples
 			renderScene( context.context, swapChainRgb, swapChainDepthStencil );
 		}
 
-		void iKeyPressedHandler.keyPressed( eKey key )
+		void iKeyPressedHandler.keyPressed( eKey key, eKeyboardState keyboardState )
 		{
 			switch( key )
 			{

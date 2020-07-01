@@ -117,7 +117,7 @@ namespace RenderSamples
 			v = 0;
 			return false;
 		}
-		void iKeyPressedHandler.keyPressed( eKey key )
+		void iKeyPressedHandler.keyPressed( eKey key, eKeyboardState keyboardState )
 		{
 			switch( key )
 			{

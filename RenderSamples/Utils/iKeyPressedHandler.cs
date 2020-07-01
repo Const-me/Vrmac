@@ -4,6 +4,6 @@ namespace RenderSamples
 {
 	interface iKeyPressedHandler
 	{
-		void keyPressed( eKey key );
+		void keyPressed( eKey key, eKeyboardState keyboardState );
 	}
 }

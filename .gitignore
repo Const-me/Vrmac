@@ -17,3 +17,4 @@ RenderSamples/linux-arm/libVrmac.so
 VrmacVideo/bin/
 VrmacVideo/obj/
 VrmacVideo/linux-arm/libDtsDecoder.so
+RenderSamples/linux-arm/libDtsDecoder.so
