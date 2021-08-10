@@ -109,21 +109,22 @@ The exact shape and topology depends on many things: input data, desired resolut
 values in [sStrokeStyle structure](https://github.com/Const-me/Vrmac/blob/1.2/VrmacInterop/Draw/Path/sStrokeStyle.cs) and a few others like viewport clipping.<br/>
 I wasn’t able to find a good enough library which generates stroked meshes like that, that part is 100% custom C++ code.
 
-4. `StrokedThin` VAA mode is used for stroked lines which areless than 1 pixel after the transforms.<br/>
+4. `StrokedThin` VAA mode is used for stroked lines which are less than 1 pixel after the transforms.<br/>
 The mesh is exactly the same as for `StrokedFat` VAA mode, there’s minor differences in HLSL and C# code for that VAA mode.
 
 ## Final Words
 
-Now you should be able to understand what presisely these two shaders are doing.
+Given all the information above, it should now be clear what precisely these two shaders are doing.
 
-The vertex shader [is converting](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L154-L174) these per-vertex magic bytes into FP32 numbers.<br/>
+The vertex shader [is converting](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L154-L174) these per-vertex magic bytes into a `float` number.<br/>
 It then [outputs](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L181-L185) that number in vertex attributes.
+It also [copies](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L114-L116) VAA type `uint` constant from the draw call into another vertex attribute.
 
-GPU then interpolates that number across triangles.<br/>
-That interpolation is implemented in hardware and is really fast.<br/>
-GPUs have that hardware because they’re interpolating quite a few values within triangles: things like colors, texture coordinates and positions are all interpolated over the triangle being rendered.
+GPU then interpolates the float numbers across 3 vertices of the triangle.<br/>
+That interpolation is implemented in hardware. Really fast.
+GPUs have that hardware because they’re interpolating quite a few values within triangles: positions, texture coordinates, and colors and interpolated over the triangle as well.
 
-Pixel shader receives the interpolated value, and does different things based on the VAA mode of the shape.
+Pixel shader receives the interpolated value, and does different things based on VAA mode of the draw command.
 
 [For filled shapes](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawPS.hlsl#L120-L123),
 it uses screen-space derivatives of that value to detect when the pixel is near the outer edge of the shape, and reduces the alpha accordingly.
@@ -148,6 +149,6 @@ Opaque stuff is way more efficient to render.
 
 My implementation caches these meshes rather aggressively. I’m only re-generating them when zoom changes by at least a factor of 2.
 
-Despite the meshes can be reused after arbitrary changes to orientation and translation, I still re-generating them when the shapes are translated or rotated substantially.<br/>
+Despite the meshes can be reused after arbitrary changes to orientation and translation, I still re-generate them when the shapes are translated or rotated substantially.<br/>
 The reason for that, the C++ code which generates these meshes can optionally do viewport culling.<br/>
 It appears that on Pi4 in my test cases, the profit from fewer vertices and triangles due to viewport culling outweighs costs of more frequent re-generation of these meshes.
