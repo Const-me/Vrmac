@@ -111,3 +111,43 @@ I wasn’t able to find a good enough library which generates stroked meshes lik
 
 4. `StrokedThin` VAA mode is used for stroked lines which areless than 1 pixel after the transforms.<br/>
 The mesh is exactly the same as for `StrokedFat` VAA mode, there’s minor differences in HLSL and C# code for that VAA mode.
+
+## Final Words
+
+Now you should be able to understand what presisely these two shaders are doing.
+
+The vertex shader [is converting](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L154-L174) these per-vertex magic bytes into FP32 numbers.<br/>
+It then [outputs](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L181-L185) that number in vertex attributes.
+
+GPU then interpolates that number across triangles.<br/>
+That interpolation is implemented in hardware and is really fast.<br/>
+GPUs have that hardware because they’re interpolating quite a few values within triangles: things like colors, texture coordinates and positions are all interpolated over the triangle being rendered.
+
+Pixel shader receives the interpolated value, and does different things based on the VAA mode of the shape.
+
+[For filled shapes](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawPS.hlsl#L120-L123),
+it uses screen-space derivatives of that value to detect when the pixel is near the outer edge of the shape, and reduces the alpha accordingly.
+
+[For fat strokes](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawPS.hlsl#L132-L136),
+it uses screen-space derivatives of that value to detect when the current pixel is in close proximity of uv=±1.0 iso-lines, and again reduces the alpha accordingly.
+
+[For thin strokes](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawPS.hlsl#L141-L142),
+it computes distance to uv=0 line (which is the geometric center of the stroke), and uses that value to reduce the alpha.
+
+If you’re unfamiliar with screen-space derivatives, [here’s a good answer](https://gamedev.stackexchange.com/a/130933/) on stackoverflow.<br/>
+That question was about OpenGL, but that feature is also available in Direct3D, Vulkan, Metal, etc.
+
+### Performance Considerations
+
+Due to these screen-space derivatives, filled meshes aren’t required to have the outer translucent edges to be exactly 1 pixel wide.<br/>
+Similarly, stroked meshes aren’t required to be inflated by exactly 0.5 pixels compared to the input stroke width.
+
+The outer translucent edge needs to be at least sqrt(2)=1.414 pixels wide (the length of diagonal for the worst case of 45° oriented edge).<br/>
+Can be more than that too, an edge of 2-4 pixels is fine as well and should look equally good, but note you generally want to minimize count of pixels rendered with translucent draw call.
+Opaque stuff is way more efficient to render.
+
+My implementation caches these meshes rather aggressively. I’m only re-generating them when zoom changes by at least a factor of 2.
+
+Despite the meshes can be reused after arbitrary changes to orientation and translation, I still re-generating them when the shapes are translated or rotated substantially.<br/>
+The reason for that, the C++ code which generates these meshes can optionally do viewport culling.<br/>
+It appears that on Pi4 in my test cases, the profit from fewer vertices and triangles due to viewport culling outweighs costs of more frequent re-generation of these meshes.
