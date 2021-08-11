@@ -117,8 +117,11 @@ The mesh is exactly the same as for `StrokedFat` VAA mode, there’s minor diffe
 Given all the information above, it should now be clear what precisely these two shaders are doing.
 
 The vertex shader [is converting](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L154-L174) these per-vertex magic bytes into a `float` number.<br/>
-It then [outputs](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L181-L185) that number in vertex attributes.
-It also [copies](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L114-L116) VAA type `uint` constant from the draw call into another vertex attribute.
+For filled meshes, this results in 0.0 for the outer vertices and +1.0 for inner vertices.<br/>
+For stroke meshes, that number is decremented by 1 which results in -1.0 for vertices on the left edge of the stroke, 0.0 for very rarely encountered inner vertices of the mesh, +1.0 for vertices on the right edge of the stroke.
+
+It then [outputs](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L181-L185) that number in vertex attributes.<br/>
+It also [copies](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawVS.hlsl#L114-L116) `uint` variable with VAA type from the draw call into another per-vertex output attribute.
 
 GPU then interpolates the float numbers across 3 vertices of the triangle.<br/>
 That interpolation is implemented in hardware. Really fast.
@@ -127,13 +130,17 @@ GPUs have that hardware because they’re interpolating quite a few values withi
 Pixel shader receives the interpolated value, and does different things based on VAA mode of the draw command.
 
 [For filled shapes](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawPS.hlsl#L120-L123),
-it uses screen-space derivatives of that value to detect when the pixel is near the outer edge of the shape, and reduces the alpha accordingly.
+it uses screen-space derivatives of that value to detect when the current pixel is near the uv=0.0 isoline (outer edge of the shape), reduces the opacity accordingly.
 
 [For fat strokes](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawPS.hlsl#L132-L136),
-it uses screen-space derivatives of that value to detect when the current pixel is in close proximity of uv=±1.0 iso-lines, and again reduces the alpha accordingly.
+it uses screen-space derivatives of that value to detect when the current pixel is near the two uv=±1.0 isolines (two edges of the stroke), reduces the opacity accordingly.
 
 [For thin strokes](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/Shaders/drawPS.hlsl#L141-L142),
-it computes distance to uv=0 line (which is the geometric center of the stroke), and uses that value to reduce the alpha.
+it simply computes distance to uv=0 isoline (the center line of the stroke), uses that value to reduce the opacity.
+
+That pipeline state [uses](https://github.com/Const-me/Vrmac/blob/1.2/Vrmac/Draw/PipelineStates/VrmacStateBase.cs#L88-L98)
+[pre-multiplied alpha](https://web.archive.org/web/20170608135346/https://blogs.msdn.microsoft.com/shawnhar/2009/11/06/premultiplied-alpha/),
+that’s why to reduce the opacity I multiply all 4 components of the color.
 
 If you’re unfamiliar with screen-space derivatives, [here’s a good answer](https://gamedev.stackexchange.com/a/130933/) on stackoverflow.<br/>
 That question was about OpenGL, but that feature is also available in Direct3D, Vulkan, Metal, etc.
